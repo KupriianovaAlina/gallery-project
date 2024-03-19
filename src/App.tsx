@@ -1,21 +1,26 @@
+import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { navigationRoutes } from './routes.js';
-import NotFound from './components/NotFound';
-import Header from './components/Header.jsx';
-import GalleryPage from './components/GalleryPage.jsx';
-import LoginPage from './components/LoginPage.jsx';
-import SignupPage from './components/SignupPage.jsx';
+
+const MainPage = lazy(() => import('./components/MainPage.jsx'));
+const Header = lazy(() => import('./components/Header.jsx'));
+const LoginPage = lazy(() => import('./components/LoginPage.jsx'));
+const SignupPage = lazy(() => import('./components/SignupPage.jsx'));
+const NotFound = lazy(() => import('./components/NotFound.jsx'))
+
 
 function App() {
   return (
     <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path={navigationRoutes.gallery()} element={(<GalleryPage />)} />
-        <Route path={navigationRoutes.login()} element={<LoginPage />} />
-        <Route path={navigationRoutes.signup()} element={<SignupPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Header />
+        <Routes>
+          <Route path={navigationRoutes.main()} element={(<MainPage />)} />
+          <Route path={navigationRoutes.login()} element={<LoginPage />} />
+          <Route path={navigationRoutes.signup()} element={<SignupPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

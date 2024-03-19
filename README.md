@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# ASTON GROUP PROJECT
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Проект выполнен командой №2: Близнюк Олеся, Виолетта Филимонова, Куприянова Алина
 
 ## Available Scripts
 

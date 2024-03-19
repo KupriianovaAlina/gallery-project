@@ -1,5 +1,5 @@
 export const navigationRoutes = {
-  gallery: () => '/',
+  main: () => '/',
   card: (id) => `/card/${id}`,
   login: () => '/login',
   signup: () => '/signup',

@@ -1,7 +1,7 @@
-const GalleryPage = () => {
+const MainPage = () => {
   return (
     <div>{'Код галереи картинок 🦋'}</div>
   )
 }
 
-export default GalleryPage;
+export default MainPage;
