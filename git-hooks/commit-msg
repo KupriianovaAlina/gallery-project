@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+
+const commitMessageRegExp = /^ASTON-REACT \[(feat|fix|chore)\]: .+/;
+let exitCode = 0;
+const commitMsgFile = process.argv[2];
+const message = fs.readFileSync(commitMsgFile, 'utf8');
+const isValid = commitMessageRegExp.test(message);
+
+if (!isValid) {
+  console.log('ERROR: Your commit message does not match the required format "ASTONJS-[numOfTask] [feat/fix/chore]: commit msg"');
+  exitCode = 1;
+}
+
+process.exit(exitCode);
