@@ -6,7 +6,9 @@ const MainPage = lazy(() => import('./components/MainPage.jsx'));
 const Header = lazy(() => import('./components/Header.jsx'));
 const LoginPage = lazy(() => import('./components/LoginPage.jsx'));
 const SignupPage = lazy(() => import('./components/SignupPage.jsx'));
-const NotFound = lazy(() => import('./components/NotFound.jsx'))
+const NotFound = lazy(() => import('./components/NotFound.jsx'));
+const Favorites = lazy(() => import('./components/FavoritesPage.jsx'));
+const History = lazy(() => import('./components/HistoryPage.jsx'));
 
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
           <Route path={navigationRoutes.main()} element={(<MainPage />)} />
           <Route path={navigationRoutes.login()} element={<LoginPage />} />
           <Route path={navigationRoutes.signup()} element={<SignupPage />} />
+          <Route path={navigationRoutes.favorites()} element={(<Favorites />)} />
+          <Route path={navigationRoutes.history()} element={(<History />)} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

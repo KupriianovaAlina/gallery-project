@@ -9,7 +9,7 @@ const message = fs.readFileSync(commitMsgFile, 'utf8');
 const isValid = commitMessageRegExp.test(message);
 
 if (!isValid) {
-  console.log('ERROR: Your commit message does not match the required format "ASTONJS-[numOfTask] [feat/fix/chore]: commit msg"');
+  console.log('ERROR: Your commit message does not match the required format "ASTON-REACT [feat/fix/chore]: commit msg"');
   exitCode = 1;
 }
 
