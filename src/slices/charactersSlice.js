@@ -1,4 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { getApiResource } from '../utils/networks';
+
+export const uploadCharacters = createAsyncThunk(
+  'characters/uploadCharacters',
+  async () => {
+    const response = await getApiResource();
+    console.log(response);
+    return response;
+  }
+);
 
 const initialState = {
   byIds: {},
@@ -9,15 +19,17 @@ const initialState = {
 const charactersSlice = createSlice({
   name: 'characters',
   initialState,
-  reducers: {
-    uploadCharacters: (state, { payload }) => {
-      payload.results.forEach((character) => {
-        if (!state.byIds[character.id]) {
-          state.byIds[character.id] = character;
-          state.allIds.push(character.id)
-        }
-      })
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(uploadCharacters.fulfilled, (state, { payload }) => {
+      const byId = payload.results.reduce((byId, user) => {
+        byId[user.id] = user;
+        return byId;
+      }, {}
+      );
+      state.byIds = byId;
+      state.allIds = Object.keys(byId);
+    })
   },
 });
 

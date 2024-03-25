@@ -1,19 +1,16 @@
 import { useEffect } from 'react';
-import { getApiResource } from '../utils/networks'
 import { useSelector, useDispatch } from 'react-redux';
 import { charactersActions } from '../slices/charactersSlice.js';
 import { charactersSelector } from '../slices/selectors';
+import { uploadCharacters } from '../slices/charactersSlice.js';
 
 const MainPage = () => {
   const characters = useSelector(charactersSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getApiResource()
-      .then((res) => dispatch(charactersActions.uploadCharacters(res)))
+    dispatch(uploadCharacters());
   }, [])
-
-  console.log(characters)
 
   return (
     <>
