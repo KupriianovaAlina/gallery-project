@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
 import { getApiResource } from '../utils/networks'
 import { useSelector, useDispatch } from 'react-redux';
-import { uploadCharacters } from '../slices/charactersSlice.js';
+import { charactersActions } from '../slices/charactersSlice.js';
+import { charactersSelector } from '../slices/selectors';
 
 const MainPage = () => {
-  const characters = useSelector((state) => state.characters);
+  const characters = useSelector(charactersSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
     getApiResource()
-      .then((res) => dispatch(uploadCharacters(res)))
+      .then((res) => dispatch(charactersActions.uploadCharacters(res)))
   }, [])
 
   console.log(characters)
@@ -17,7 +18,7 @@ const MainPage = () => {
   return (
     <>
       <div>{'Код галереи персонажей 🦋'}</div>
-      {Object.values(characters.byIds).map((character) => <p>{`${character.name}, ${character.id}`}</p>
+      {Object.values(characters.byIds).map((character) => <p key={character.id}>{`${character.name}, ${character.id}`}</p>
       )}
     </>
   )

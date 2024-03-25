@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Начальное значение
 const initialState = {
   byIds: {},
   allIds: [],
@@ -13,13 +12,13 @@ const charactersSlice = createSlice({
   reducers: {
     uploadCharacters: (state, { payload }) => {
       payload.results.forEach((character) => {
-        state.byIds[character.id] = character;
-        state.allIds.push(character.id);
+        if (!state.byIds[character.id]) {
+          state.byIds[character.id] = character;
+          state.allIds.push(character.id)
+        }
       })
     },
   },
 });
 
-export const { uploadCharacters } = charactersSlice.actions;
-
-export default charactersSlice.reducer;
+export const { reducer: charactersReducer, actions: charactersActions } = charactersSlice;

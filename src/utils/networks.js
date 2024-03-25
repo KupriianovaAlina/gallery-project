@@ -1,6 +1,6 @@
-const URL_ROOT = 'https://rickandmortyapi.com/api/character';
+import { API_URL_ROOT } from './constants'
 
 export const getApiResource = () => {
-  return fetch(URL_ROOT)
+  return fetch(API_URL_ROOT)
     .then((res) => res.json())
 }
