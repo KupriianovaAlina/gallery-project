@@ -3,4 +3,6 @@ export const navigationRoutes = {
   card: (id) => `/card/${id}`,
   login: () => '/login',
   signup: () => '/signup',
+  favorites: () => '/favorites',
+  history: () => '/history'
 };
