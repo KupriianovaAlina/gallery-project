@@ -12,11 +12,11 @@ const History = lazy(() => import('./components/HistoryPage.jsx'));
 
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true); 
+  // const [isAuthenticated, setIsAuthenticated] = useState(true); 
   return (
     <BrowserRouter>
       <Suspense fallback={<div>Loading...</div>}>
-        <Header isAuthenticated={isAuthenticated}/>
+        <Header/>
         <Routes>
           <Route path={navigationRoutes.main()} element={(<MainPage />)} />
           <Route path={navigationRoutes.login()} element={<LoginPage />} />
