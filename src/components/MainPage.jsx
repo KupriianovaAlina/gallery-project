@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { charactersActions } from '../slices/charactersSlice.js';
+import { charactersActions } from '../slices/charactersSlice';
 import { charactersSelector } from '../slices/selectors';
-import { uploadCharacters } from '../slices/charactersSlice.js';
+import { uploadCharacters } from '../slices/charactersSlice';
 
 const MainPage = () => {
   const characters = useSelector(charactersSelector);
@@ -10,7 +10,7 @@ const MainPage = () => {
 
   useEffect(() => {
     dispatch(uploadCharacters());
-  }, [])
+  }, [dispatch])
 
   return (
     <>
