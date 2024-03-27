@@ -1,5 +1,5 @@
 import React from "react";
-import {InputProps} from "../types/types";
+import {InputProps} from "../SignUpPage/types/types";
 
 export const Input: React.FC<InputProps> = ({id, name, autoComplete, required = true, value, onChange, label, type = "text"}) => (
     <div>

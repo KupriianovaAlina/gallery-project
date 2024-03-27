@@ -1,6 +1,6 @@
 import {ChangeEvent} from "react";
 
-export interface FormData {
+export type FormData = {
     firstName: string;
     lastName: string;
     email: string;
@@ -9,7 +9,7 @@ export interface FormData {
 
 export type ErrorMessages = Record<string, string>;
 
-export interface InputProps {
+export type InputProps = {
     id: string;
     name: string;
     autoComplete?: string;
