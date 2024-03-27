@@ -33,11 +33,13 @@ type Payload = {
   results: Character[]
 }
 
+type Status = 'idle' | 'pending' | 'rejected' | 'fulfilled';
+
 type State = {
   byIds: Record<number, Character>,
   allIds: number[],
   favoriteIds: number[],
-  fetchStatus: 'idle' | 'pending' | 'rejected' | 'fulfilled',
+  fetchStatus: Status
 }
 
 export const uploadCharacters = createAsyncThunk(
