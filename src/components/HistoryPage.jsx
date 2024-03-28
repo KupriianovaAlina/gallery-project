@@ -1,7 +1,5 @@
-const History = () => {
+export const History = () => {
     return (
       <div>{'История'}</div>
     );
   };
-  
-  export default History;

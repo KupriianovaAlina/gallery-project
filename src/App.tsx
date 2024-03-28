@@ -3,16 +3,15 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { navigationRoutes } from './routes.js';
 
 const MainPage = lazy(() => import('./components/MainPage.jsx'));
-const Header = lazy(() => import('./components/Header.jsx'));
+const Header = lazy(() => import('./components/Header.jsx').then(module => ({ default: module.Header })));
 const LoginPage = lazy(() => import('./components/LoginPage.jsx'));
 const SignupPage = lazy(() => import('./components/SignupPage.jsx'));
 const NotFound = lazy(() => import('./components/NotFound.jsx'));
-const Favorites = lazy(() => import('./components/FavoritesPage.jsx'));
-const History = lazy(() => import('./components/HistoryPage.jsx'));
+const Favorites = lazy(() => import('./components/FavoritesPage').then(module => ({ default: module.Favorites })));
+const History = lazy(() => import('./components/HistoryPage.jsx').then(module => ({ default: module.History })));
 
 
 function App() {
-  // const [isAuthenticated, setIsAuthenticated] = useState(true); 
   return (
     <BrowserRouter>
       <Suspense fallback={<div>Loading...</div>}>

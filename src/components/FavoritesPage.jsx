@@ -1,7 +1,5 @@
-const Favorites = () => {
+export const Favorites = () => {
     return (
       <div>{'Избранное'}</div>
     );
   };
-  
-  export default Favorites;
