@@ -1,6 +1,6 @@
 export const navigationRoutes = {
   main: () => '/',
   card: (id) => `/card/${id}`,
-  login: () => '/login',
+  signin: () => '/signin',
   signup: () => '/signup',
 };
