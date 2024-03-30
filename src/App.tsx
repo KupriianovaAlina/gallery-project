@@ -6,8 +6,7 @@ const MainPage = lazy(() => import('./components/MainPage.jsx'));
 const Header = lazy(() => import('./components/Header.jsx'));
 const LoginPage = lazy(() => import('./components/LoginPage.jsx'));
 const SignUpPage = lazy(() => import('./components/SignUpPage/SignUpPage').then(module => ({ default: module.SignUpPage })));
-const NotFound = lazy(() => import('./components/NotFound.jsx'))
-
+const NotFound = lazy(() => import('./components/NotFound.jsx').then(module => ({ default: module.NotFound })));
 
 function App() {
   return (
