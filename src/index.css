@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+.not-found-button{
+    background-color: #00b5cc;
+}
+
+.not-found-button:hover{
+    background-color: #b2df28;
+}
+
+.not-found-text{
+    color: #b2df28;
+}
+
 
 body {
     background-image: url('../public/images/bg.jpg');
