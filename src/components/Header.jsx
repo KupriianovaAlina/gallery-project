@@ -6,11 +6,10 @@ import { NavigationLinks } from './NavigationLinks';
 
 export const Header = () => {
   const auth = {
-    isAuthtoraized: true
+    isAuthtoraized: false,
   };
 
-  const handleLogout = () => {
-  };
+  const handleLogout = () => {};
 
   return (
     <div>
@@ -24,5 +23,5 @@ export const Header = () => {
       )}
       {auth.isAuthtoraized && <NavigationLinks />}
     </div>
-  )
-}
+  );
+};
