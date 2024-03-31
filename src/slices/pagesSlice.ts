@@ -1,5 +1,11 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { fetchData } from './sharedThunks';
+
+type State = {
+  numberOfPages: number | null,
+  activePage: number,
+  fetchStatus: Status,
+}
 
 type Character = {
   created: string,
@@ -35,34 +41,25 @@ type Payload = {
 
 type Status = 'idle' | 'pending' | 'rejected' | 'fulfilled';
 
-type State = {
-  byIds: Record<number, Character>,
-  allIds: number[],
-  favoriteIds: number[],
-  fetchStatus: Status,
-}
-
 const initialState: State = {
-  byIds: {},
-  allIds: [],
-  favoriteIds: [],
+  numberOfPages: null,
+  activePage: 1,
   fetchStatus: 'idle',
 };
 
-const charactersSlice = createSlice({
-  name: 'characters',
+const pagesSlice = createSlice({
+  name: 'pages',
   initialState,
-  reducers: {},
+  reducers: {
+    setActivePage: (state, { payload: newActivePage }) => {
+      state.activePage = newActivePage;
+    },
+
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchData.fulfilled, (state, { payload }: PayloadAction<Payload>) => {
-      const byId: Record<number, Character> = payload.results.reduce((byId, character) => {
-        byId[character.id] = character;
-        return byId;
-      }, {} as Record<number, Character>);
-      state.byIds = byId;
-      state.allIds = Object.keys(byId).map(Number);
+      state.numberOfPages = payload.info.pages;
       state.fetchStatus = 'fulfilled';
-
     })
       .addCase(fetchData.pending, (state) => {
         state.fetchStatus = 'pending';
@@ -70,7 +67,7 @@ const charactersSlice = createSlice({
       .addCase(fetchData.rejected, (state) => {
         state.fetchStatus = 'rejected';
       })
-  },
+  }
 });
 
-export const { reducer: charactersReducer, actions: charactersActions } = charactersSlice;
+export const { reducer: pagesReducer, actions: pagesActions } = pagesSlice;
