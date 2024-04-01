@@ -2,14 +2,14 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { charactersSelector } from '../slices/selectors';
 
-const Card = () => {
+export const Card = () => {
   const params = useParams();
   const characterId = params.id.slice(1);
   const characters = useSelector(charactersSelector);
   const character = characters.byIds[characterId];
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex my-20 items-center justify-center">
       <div className="relative flex w-full max-w-[48rem] flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
         <div className="relative m-0 w-2/5 shrink-0 overflow-hidden rounded-xl rounded-r-none bg-white bg-clip-border text-gray-700">
           <img
@@ -33,5 +33,3 @@ const Card = () => {
     </div>
   );
 };
-
-export default Card;

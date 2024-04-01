@@ -7,3 +7,32 @@
   src: local('SchwiftyFont'),
     url(./fonts/get_schwifty.woff) format('woff');
 }
+
+.not-found-button {
+  background-color: #00b5cc;
+}
+
+.not-found-button:hover {
+  background-color: #b2df28;
+}
+
+.not-found-text {
+  color: #b2df28;
+}
+
+
+body {
+  background-image: url('../public/images/bg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-attachment: fixed;
+}
+
+.header-button {
+  background-color: #00b5cc;
+}
+
+.header-button:hover {
+  background-color: #b2df28;
+}
