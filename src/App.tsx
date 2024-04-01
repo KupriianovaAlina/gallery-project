@@ -6,7 +6,8 @@ const MainPage = lazy(() => import('./components/MainPage.jsx'));
 const Header = lazy(() => import('./components/Header.jsx'));
 const LoginPage = lazy(() => import('./components/LoginPage.jsx'));
 const SignupPage = lazy(() => import('./components/SignupPage.jsx'));
-const NotFound = lazy(() => import('./components/NotFound.jsx'))
+const NotFound = lazy(() => import('./components/NotFound.jsx'));
+const Card = lazy(() => import('./components/Card.jsx'));
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Header />
         <Routes>
           <Route path={navigationRoutes.main()} element={(<MainPage />)} />
+          <Route path={navigationRoutes.card()} element={(<Card />)} />
           <Route path={navigationRoutes.login()} element={<LoginPage />} />
           <Route path={navigationRoutes.signup()} element={<SignupPage />} />
           <Route path="*" element={<NotFound />} />

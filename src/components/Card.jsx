@@ -1,26 +1,37 @@
-const Card = ({ character }) => {
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { charactersSelector } from '../slices/selectors';
+
+const Card = () => {
+  const params = useParams();
+  const characterId = params.id.slice(1);
+  const characters = useSelector(charactersSelector);
+  const character = characters.byIds[characterId];
+
   return (
-    <div className="w-72 h-96 relative" key={character.id}>
-      <img
-        alt="gallery"
-        className="absolute inset-0 w-full h-full object-cover object-center rounded-xl"
-        src={character.image}
-      />
-      <div className="flex flex-col justify-between	h-full w-full px-8 py-10 relative z-10 bg-gray-800 opacity-0 hover:opacity-90 rounded-xl text-white">
-        <div>
-          <h2 className="text-sm title-font font-medium mb-1">
-            {"Character's name"}
-          </h2>
-          <h1 className="font-schwifty-font text-3xl title-font font-bold mb-3">
-            {character.name}
-          </h1>
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="relative flex w-full max-w-[48rem] flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+        <div className="relative m-0 w-2/5 shrink-0 overflow-hidden rounded-xl rounded-r-none bg-white bg-clip-border text-gray-700">
+          <img
+            src={character.image}
+            alt="image"
+            className="h-full w-full object-cover"
+          />
         </div>
-        <div>
-          <p className="text-white italic">{`Click for more information >>>`}</p>
+        <div className="p-6">
+          <h6 className="mb-4 block font-sans text-base font-semibold uppercase leading-relaxed tracking-normal text-pink-500 antialiased">
+            {`CHARACTER'S INFO`}
+          </h6>
+          <h4 className="mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+            {character.name}
+          </h4>
+          <p className="mb-8 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
+            Информация
+          </p>
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default Card;
