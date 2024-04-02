@@ -1,46 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchData } from './sharedThunks';
-
-type Character = {
-  created: string,
-  episode: string[],
-  gender: string,
-  id: number,
-  image: string,
-  location: {
-    name: string,
-    url: string
-  },
-  name: string,
-  origin: {
-    name: string, url: string
-  },
-  species: string,
-  status: string,
-  type: string,
-  url: string
-}
-
-type Info = {
-  count: number,
-  next: string,
-  pages: number,
-  prev: null | string,
-}
-
-type Payload = {
-  info: Info,
-  results: Character[]
-}
-
-type Status = 'idle' | 'pending' | 'rejected' | 'fulfilled';
-
-type State = {
-  byIds: Record<number, Character>,
-  allIds: number[],
-  favoriteIds: number[],
-  fetchStatus: Status,
-}
+import { Info, Payload, Status, Character, charactersState as State } from './types'
 
 const initialState: State = {
   byIds: {},

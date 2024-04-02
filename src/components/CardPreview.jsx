@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
+import { navigationRoutes } from '../routes';
 
 const CardPreview = ({ character }) => {
   return (
-    <Link to={`card/:${character.id}`}>
+    <Link to={navigationRoutes.card(character.id)}>
       <div className="w-72 h-96 relative" key={character.id}>
         <img
           alt="gallery"
