@@ -1,24 +1,32 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { charactersActions } from '../slices/charactersSlice';
-import { charactersSelector } from '../slices/selectors';
-import { uploadCharacters } from '../slices/charactersSlice';
+import { charactersSelector, pagesSelector } from '../slices/selectors';
+import { fetchData } from '../slices/sharedThunks';
+import Gallery from './Gallery';
+import { Pagination } from '../components/Pagination';
 
 const MainPage = () => {
   const characters = useSelector(charactersSelector);
+  const pages = useSelector(pagesSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(uploadCharacters());
-  }, [dispatch])
+    dispatch(fetchData(pages.activePage));
+  }, [dispatch]);
 
   return (
-    <>
-      <div>{'Код галереи персонажей 🦋'}</div>
-      {Object.values(characters.byIds).map((character) => <p key={character.id}>{`${character.name}, ${character.id}`}</p>
-      )}
-    </>
-  )
-}
+    <div className="flex flex-col justify-center items-center py-10">
+      <section>
+        <img
+          className="w-1/2 mx-auto"
+          src={'/images/gallery-title.png'}
+          alt="gallery title"
+        />
+      </section>
+      <Gallery characters={characters} />
+      <Pagination />
+    </div>
+  );
+};
 
 export default MainPage;

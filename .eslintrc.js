@@ -18,6 +18,18 @@ module.exports = {
         sourceType: 'script',
       },
     },
+    {
+      files: ['*.ts'],
+      rules: {
+        'no-undef': 'off',
+      },
+    },
+    {
+      files: ['*.ts'],
+      rules: {
+        'no-unused-vars': 'off',
+      },
+    },
   ],
   parserOptions: {
     ecmaVersion: 2021,
