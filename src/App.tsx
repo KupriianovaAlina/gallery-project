@@ -9,7 +9,7 @@ const Header = lazy(() =>
     default: module.Header,
   })),
 );
-const LoginPage = lazy(() => import('./components/LoginPage.jsx'));
+const SignInPage = lazy(() => import('./components/SignInPage').then(module => ({ default: module.SignInPage })));
 const SignUpPage = lazy(() =>
   import('./components/SignUpPage/SignUpPage').then(module => ({
     default: module.SignUpPage,
@@ -43,8 +43,8 @@ function App() {
         <Header />
         <Routes>
           <Route path={navigationRoutes.main()} element={(<MainPage />)} />
+          <Route path={navigationRoutes.signin()} element={<SignInPage />} />
           <Route path={navigationRoutes.card()} element={(<Card />)} />
-          <Route path={navigationRoutes.login()} element={<LoginPage />} />
           <Route path={navigationRoutes.signup()} element={<SignUpPage />} />
           <Route path={navigationRoutes.favorites()} element={<Favorites />} />
           <Route path={navigationRoutes.history()} element={<History />} />
