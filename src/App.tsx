@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { navigationRoutes } from './routes.js';
 
+
 const MainPage = lazy(() => import('./components/MainPage.jsx'));
 const Header = lazy(() =>
   import('./components/Header.jsx').then(module => ({
@@ -29,6 +30,11 @@ const History = lazy(() =>
     default: module.History,
   })),
 );
+const Card = lazy(() =>
+  import('./components/Card.jsx').then(module => ({
+    default: module.Card,
+  })),
+);
 
 function App() {
   return (
@@ -36,7 +42,8 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Header />
         <Routes>
-          <Route path={navigationRoutes.main()} element={<MainPage />} />
+          <Route path={navigationRoutes.main()} element={(<MainPage />)} />
+          <Route path={navigationRoutes.card()} element={(<Card />)} />
           <Route path={navigationRoutes.login()} element={<LoginPage />} />
           <Route path={navigationRoutes.signup()} element={<SignUpPage />} />
           <Route path={navigationRoutes.favorites()} element={<Favorites />} />
