@@ -8,6 +8,7 @@ export type charactersState = {
   byIds: Record<number, Character>,
   allIds: number[],
   favoriteIds: number[],
+  currentCharacter: Character | {},
   fetchStatus: Status,
 }
 

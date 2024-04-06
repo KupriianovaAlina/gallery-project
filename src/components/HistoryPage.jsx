@@ -1,5 +1,3 @@
 export const History = () => {
-    return (
-      <div>{'История'}</div>
-    );
-  };
+  return <div>{'История'}</div>;
+};
