@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom';
 import { navigationRoutes } from '../routes';
 import FavoriteButton from './FavoriteButton';
+import { StorageContext } from './StorageProvider';
+import { useContext } from 'react';
 
 const CardPreview = ({ character }) => {
+  const storage = useContext(StorageContext);
+
   return (
     <div className="relative">
-      <FavoriteButton />
+      {storage.isAuthtoraized && <FavoriteButton id={character.id} />}
       <Link to={navigationRoutes.card(character.id)}>
         <div className="w-72 h-96 relative" key={character.id}>
           <img

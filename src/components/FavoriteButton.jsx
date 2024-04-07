@@ -1,15 +1,22 @@
 import cn from 'classnames';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { StorageContext } from './StorageProvider';
 
-const FavoriteButton = () => {
-  const [isFavorite, setIsFavorite] = useState(false);
+const FavoriteButton = ({ id }) => {
+  const storage = useContext(StorageContext);
+
+  const [isFavorite, setIsFavorite] = useState(
+    storage.getUserFavorite().includes(id),
+  );
 
   const toggleFavorite = () => {
     if (isFavorite) {
       setIsFavorite(false);
+      storage.removeCardFromFavorite(id);
       return;
     }
     setIsFavorite(true);
+    storage.addCardToFavorite(id);
   };
 
   const buttonClasses = cn(
