@@ -3,11 +3,16 @@ import { API_URL_ROOT } from '../utils/constants';
 
 const pageUrl = (pageNumber: number = 1): string => `${API_URL_ROOT}?page=${pageNumber}`;
 const idUrl = (id: number): string => `${API_URL_ROOT}/${id}`
+const favoriteUrl = (ids: number[] = []) => {
+  const str = ids.join(',')
+  return `${API_URL_ROOT}/${ids}`
+}
 
 export const fetchData = createAsyncThunk(
   'fetchData',
   async (pageNumber: number, { rejectWithValue }) => {
     try {
+      console.log(pageUrl(pageNumber))
       const response = await fetch(pageUrl(pageNumber));
       if (response.ok) {
         return response.json();
@@ -26,6 +31,23 @@ export const fetchCharacter = createAsyncThunk(
   async (id: number, { rejectWithValue }) => {
     try {
       const response = await fetch(idUrl(id));
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Ошибка при загрузке персонажа');
+      }
+    } catch (error: any) {
+      console.error('Произошла ошибка:', error.message);
+      rejectWithValue(error);
+    }
+  }
+);
+
+export const fetchFavoriteCharacters = createAsyncThunk(
+  'fetchFavoriteCharacters',
+  async (ids: number[], { rejectWithValue }) => {
+    try {
+      const response = await fetch(favoriteUrl(ids.sort()));
       if (response.ok) {
         return response.json();
       } else {

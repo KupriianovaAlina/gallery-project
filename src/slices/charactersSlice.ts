@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchData, fetchCharacter } from './sharedThunks';
+import { fetchData, fetchCharacter, fetchFavoriteCharacters } from './sharedThunks';
 import { Payload, Character, charactersState as State } from './types'
 
 const initialState: State = {
@@ -38,6 +38,21 @@ const charactersSlice = createSlice({
         state.fetchStatus = 'pending';
       })
       .addCase(fetchCharacter.rejected, (state) => {
+        state.fetchStatus = 'fulfilled';
+      })
+      .addCase(fetchFavoriteCharacters.fulfilled, (state, { payload }) => {
+        const byId: Record<number, Character> = payload.reduce((byId: { [x: string]: any; }, character: { id: string | number; }) => {
+          byId[character.id] = character;
+          return byId;
+        }, {} as Record<number, Character>);
+        state.byIds = byId;
+        state.allIds = Object.keys(byId).map(Number);
+        state.fetchStatus = 'fulfilled';
+      })
+      .addCase(fetchFavoriteCharacters.pending, (state) => {
+        state.fetchStatus = 'pending';
+      })
+      .addCase(fetchFavoriteCharacters.rejected, (state) => {
         state.fetchStatus = 'fulfilled';
       })
   }
