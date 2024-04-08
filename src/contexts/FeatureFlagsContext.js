@@ -8,9 +8,7 @@ export const FeatureFlagsProvider = ({ children }) => {
 
   useEffect(() => {
     const getToggles = async () => {
-      const { data } = await axios.get(
-        'http://localhost:3001/api/feature-flags',
-      );
+      const { data } = await axios.get('/api/feature-flags');
 
       setFeatureFlags(data);
     };
