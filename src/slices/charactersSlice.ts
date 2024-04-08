@@ -12,6 +12,7 @@ const initialState: State = {
   byIds: {},
   allIds: [],
   favoriteIds: [],
+  currentCharacter: {},
   fetchStatus: 'idle',
 };
 
@@ -24,16 +25,22 @@ const charactersSlice = createSlice({
       .addCase(
         fetchData.fulfilled,
         (state, { payload }: PayloadAction<Payload>) => {
-          const byId: Record<number, Character> = payload.results.reduce(
-            (byId, character) => {
-              byId[character.id] = character;
-              return byId;
-            },
-            {} as Record<number, Character>,
-          );
-          state.byIds = byId;
-          state.allIds = Object.keys(byId).map(Number);
-          state.fetchStatus = 'fulfilled';
+          if (!payload.results) {
+            state.currentCharacter = payload;
+            state.fetchStatus = 'fulfilled';
+            return;
+          } else {
+            const byId: Record<number, Character> = payload.results.reduce(
+              (byId, character) => {
+                byId[character.id] = character;
+                return byId;
+              },
+              {} as Record<number, Character>,
+            );
+            state.byIds = byId;
+            state.allIds = Object.keys(byId).map(Number);
+            state.fetchStatus = 'fulfilled';
+          }
         },
       )
       .addCase(fetchData.pending, state => {

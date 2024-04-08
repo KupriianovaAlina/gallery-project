@@ -9,6 +9,7 @@ export type charactersState = {
   byIds: Record<number, Character>,
   allIds: number[],
   favoriteIds: number[],
+  currentCharacter: Character | {},
   fetchStatus: Status,
 }
 
@@ -58,7 +59,8 @@ export type FetchDataParams = {
   pageNumber: number,
   name?: string,
   status?: string,
-  gender?: string
+  gender?: string,
+  id?: string,
 }
 
 export type FilterSelectProps = {

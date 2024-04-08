@@ -7,7 +7,10 @@ const url = ({
   name,
   status,
   gender,
+  id,
 }: FetchDataParams): string => {
+  if (id) return `${API_URL_ROOT}/${id}`;
+
   const params = new URLSearchParams(`page=${pageNumber}`);
 
   if (name) params.append('name', name);
@@ -18,7 +21,7 @@ const url = ({
 };
 
 export const fetchData = createAsyncThunk(
-  'shared/fetchData',
+  'fetchData',
   async (params: FetchDataParams, { rejectWithValue }) => {
     try {
       const response = await fetch(url(params));

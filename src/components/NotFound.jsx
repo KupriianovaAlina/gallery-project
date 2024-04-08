@@ -9,8 +9,10 @@ export const NotFound = () => {
         <h1 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-5xl">Page not found</h1>
         <p className="mt-6 text-base leading-7 text-white">Sorry, we couldn’t find the page you’re looking for.</p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
-          <Link className='not-found-button inline-block w-28 text-center py-2 mx-5 text-black rounded-md transition-colors duration-300'
-            to={navigationRoutes.main()}>
+          <Link
+            className="not-found-button inline-block w-28 text-center py-2 mx-5 text-black rounded-md transition-colors duration-300"
+            to={navigationRoutes.main()}
+          >
             Go back
           </Link>
         </div>

@@ -8,6 +8,12 @@
     url(./fonts/get_schwifty.woff) format('woff');
 }
 
+@font-face {
+  font-family: 'AcmeFont';
+  src: local('AcmeFont'),
+    url(./fonts/Acme-Regular.woff) format('woff');
+}
+
 .not-found-button {
   background-color: #00b5cc;
 }

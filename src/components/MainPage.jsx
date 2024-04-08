@@ -18,11 +18,9 @@ const MainPage = () => {
   return (
     <div className="flex flex-col justify-center items-center py-10">
       <section>
-        <img
-          className="w-1/2 mx-auto"
-          src={'/images/gallery-title.png'}
-          alt="gallery title"
-        />
+        <h2 className="font-acme text-white text-6xl mb-10">
+          {"Characters' gallery"}
+        </h2>
       </section>
       <Filters />
       <Gallery characters={characters} />
