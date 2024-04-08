@@ -1,46 +1,45 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API_URL_ROOT } from '../utils/constants';
+import { FetchDataParams } from './types';
 
-const pageUrl = (pageNumber: number = 1): string => `${API_URL_ROOT}?page=${pageNumber}`;
-const idUrl = (id: number): string => `${API_URL_ROOT}/${id}`
-const favoriteUrl = (ids: number[] = []) => {
-  const str = ids.join(',')
-  return `${API_URL_ROOT}/${ids}`
-}
+const url = ({
+  pageNumber = 1,
+  name,
+  status,
+  gender,
+  id,
+}: FetchDataParams): string => {
+  if (id) return `${API_URL_ROOT}/${id}`;
+
+  const params = new URLSearchParams(`page=${pageNumber}`);
+
+  if (name) params.append('name', name);
+  if (status) params.append('status', status);
+  if (gender) params.append('gender', gender);
+
+  return `${API_URL_ROOT}?${params}`;
+};
 
 export const fetchData = createAsyncThunk(
   'fetchData',
-  async (pageNumber: number, { rejectWithValue }) => {
+  async (params: FetchDataParams, { rejectWithValue }) => {
     try {
-      console.log(pageUrl(pageNumber))
-      const response = await fetch(pageUrl(pageNumber));
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Ошибка при загрузке данных');
-      }
-    } catch (error: any) {
-      console.error('Произошла ошибка:', error.message);
-      rejectWithValue(error);
-    }
-  }
-);
+      const response = await fetch(url(params));
+      const data = await response.json();
 
-export const fetchCharacter = createAsyncThunk(
-  'fetchCharacter',
-  async (id: number, { rejectWithValue }) => {
-    try {
-      const response = await fetch(idUrl(id));
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Ошибка при загрузке персонажа');
+      if (!response.ok || data.error) {
+        const errorMessage = data.message || 'Ошибка при выполнении запроса';
+        if (errorMessage === 'There is nothing here') {
+          return rejectWithValue('Нет результатов');
+        }
+        return rejectWithValue(errorMessage);
       }
+      return data;
     } catch (error: any) {
       console.error('Произошла ошибка:', error.message);
       rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const fetchFavoriteCharacters = createAsyncThunk(
@@ -57,5 +56,5 @@ export const fetchFavoriteCharacters = createAsyncThunk(
       console.error('Произошла ошибка:', error.message);
       rejectWithValue(error);
     }
-  }
+  },
 );
