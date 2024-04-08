@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchData, fetchCharacter } from './sharedThunks';
+import {
+  fetchData,
+  fetchCharacter,
+  fetchFavoriteCharacters,
+} from './sharedThunks';
 import { Payload, Character, charactersState as State } from './types';
 
 const initialState: State = {
   byIds: {},
   allIds: [],
-  favoriteIds: [],
   currentCharacter: {},
   fetchStatus: 'idle',
 };
@@ -19,22 +22,16 @@ const charactersSlice = createSlice({
       .addCase(
         fetchData.fulfilled,
         (state, { payload }: PayloadAction<Payload>) => {
-          if (!payload.results) {
-            state.currentCharacter = payload;
-            state.fetchStatus = 'fulfilled';
-            return;
-          } else {
-            const byId: Record<number, Character> = payload.results.reduce(
-              (byId, character) => {
-                byId[character.id] = character;
-                return byId;
-              },
-              {} as Record<number, Character>,
-            );
-            state.byIds = byId;
-            state.allIds = Object.keys(byId).map(Number);
-            state.fetchStatus = 'fulfilled';
-          }
+          const byId: Record<number, Character> = payload.results.reduce(
+            (byId, character) => {
+              byId[character.id] = character;
+              return byId;
+            },
+            {} as Record<number, Character>,
+          );
+          state.byIds = byId;
+          state.allIds = Object.keys(byId).map(Number);
+          state.fetchStatus = 'fulfilled';
         },
       )
       .addCase(fetchData.pending, state => {
@@ -54,6 +51,24 @@ const charactersSlice = createSlice({
         state.fetchStatus = 'pending';
       })
       .addCase(fetchCharacter.rejected, state => {
+        state.fetchStatus = 'fulfilled';
+      })
+      .addCase(fetchFavoriteCharacters.fulfilled, (state, { payload }) => {
+        const characters = payload.length ? payload : [payload];
+        const byId: Record<number, Character> = characters.reduce(
+          (byId, character) => {
+            byId[character.id] = character;
+            return byId;
+          },
+          {} as Record<number, Character>,
+        );
+        state.byIds = byId;
+        state.allIds = Object.keys(byId).map(Number);
+      })
+      .addCase(fetchFavoriteCharacters.pending, state => {
+        state.fetchStatus = 'pending';
+      })
+      .addCase(fetchFavoriteCharacters.rejected, state => {
         state.fetchStatus = 'fulfilled';
       });
   },

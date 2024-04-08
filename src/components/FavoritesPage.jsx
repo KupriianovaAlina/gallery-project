@@ -10,7 +10,6 @@ export const Favorites = () => {
   const dispatch = useDispatch();
 
   const storage = useContext(StorageContext);
-  console.log(storage.getUserFavorite().join(','));
 
   useEffect(() => {
     dispatch(fetchFavoriteCharacters(storage.getUserFavorite()));

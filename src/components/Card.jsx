@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { charactersSelector } from '../slices/selectors';
 import FavoriteButton from './FavoriteButton';
 import { navigationRoutes } from '../routes';
-import { fetchData } from '../slices/sharedThunks';
+import { fetchCharacter } from '../slices/sharedThunks';
 import { NavLink } from 'react-router-dom';
 import { StorageContext } from './StorageProvider';
 
@@ -18,7 +18,7 @@ export const Card = () => {
   const character = characters.currentCharacter;
 
   useEffect(() => {
-    dispatch(fetchData({ id }));
+    dispatch(fetchCharacter(id));
   }, [dispatch]);
 
   return (

@@ -8,7 +8,6 @@ export type pagesState = {
 export type charactersState = {
   byIds: Record<number, Character>;
   allIds: number[];
-  favoriteIds: number[];
   currentCharacter: Character | {};
   fetchStatus: Status;
 };
@@ -57,11 +56,11 @@ export type filtersState = {
 };
 
 export type FetchDataParams = {
-  pageNumber: number;
+  pageNumber?: number;
   name?: string;
   status?: string;
   gender?: string;
-  id?: string;
+  id?: number;
   ids?: number[];
 };
 
