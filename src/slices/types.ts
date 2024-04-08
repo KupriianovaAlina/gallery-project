@@ -2,6 +2,7 @@ export type pagesState = {
   numberOfPages: number | null,
   activePage: number,
   fetchStatus: Status,
+  error: string | null
 }
 
 export type charactersState = {
@@ -37,6 +38,7 @@ export type Info = {
   next: string,
   pages: number,
   prev: null | string,
+  filters: string | undefined
 }
 
 export type Payload = {
@@ -45,3 +47,24 @@ export type Payload = {
 }
 
 export type Status = 'idle' | 'pending' | 'rejected' | 'fulfilled';
+
+export type filtersState = {
+  nameFilter: string,
+  statusFilter: string,
+  genderFilter: string,
+  fetchStatus: Status
+}
+
+export type FetchDataParams = {
+  pageNumber: number,
+  name?: string,
+  status?: string,
+  gender?: string,
+  id?: string,
+}
+
+export type FilterSelectProps = {
+  options: { label: string; value: string }[],
+  id: string,
+  label: string
+}

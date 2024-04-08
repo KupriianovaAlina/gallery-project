@@ -1,5 +1,5 @@
 import React from 'react';
-import { pagesSelector } from '../slices/selectors';
+import { filtersSelector, pagesSelector } from '../slices/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { pagesActions } from '../slices/pagesSlice';
 import { fetchData } from '../slices/sharedThunks';
@@ -7,19 +7,33 @@ import { fetchData } from '../slices/sharedThunks';
 export function Pagination() {
   const pages = useSelector(pagesSelector);
   const dispatch = useDispatch();
-
+  const filter = useSelector(filtersSelector);
   const next = () => {
     if (pages.activePage === pages.numberOfPages) return;
-
-    dispatch(pagesActions.setActivePage(pages.activePage + 1));
-    dispatch(fetchData(pages.activePage + 1));
+    const newPage = pages.activePage + 1;
+    dispatch(pagesActions.setActivePage(newPage));
+    dispatch(
+      fetchData({
+        pageNumber: newPage,
+        name: filter.nameFilter,
+        status: filter.statusFilter,
+        gender: filter.genderFilter,
+      }),
+    );
   };
 
   const prev = () => {
     if (pages.activePage === 1) return;
-
-    dispatch(pagesActions.setActivePage(pages.activePage - 1));
-    dispatch(fetchData(pages.activePage - 1));
+    const newPage = pages.activePage - 1;
+    dispatch(pagesActions.setActivePage(newPage));
+    dispatch(
+      fetchData({
+        pageNumber: newPage,
+        name: filter.nameFilter,
+        status: filter.statusFilter,
+        gender: filter.genderFilter,
+      }),
+    );
   };
 
   return (
