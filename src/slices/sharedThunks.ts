@@ -8,8 +8,10 @@ const url = ({
   status,
   gender,
   id,
+  ids,
 }: FetchDataParams): string => {
   if (id) return `${API_URL_ROOT}/${id}`;
+  if (ids) return `${API_URL_ROOT}/${ids.join(',')}`;
 
   const params = new URLSearchParams(`page=${pageNumber}`);
 
@@ -46,7 +48,7 @@ export const fetchFavoriteCharacters = createAsyncThunk(
   'fetchFavoriteCharacters',
   async (ids: number[], { rejectWithValue }) => {
     try {
-      const response = await fetch(favoriteUrl(ids.sort()));
+      const response = await fetch(url({ ids }));
       if (response.ok) {
         return response.json();
       } else {
