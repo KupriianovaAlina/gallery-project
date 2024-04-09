@@ -52,7 +52,7 @@ const MainPage = () => {
         </h2>
       </section>
       <Filters />
-      <Gallery characters={characters} />
+      <Gallery />
       <Pagination />
     </div>
   );

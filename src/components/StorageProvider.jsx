@@ -54,6 +54,11 @@ const StorageProvider = ({ children }) => {
     setUsers(updatedUsers);
   };
 
+  const getUserSearchHistory = () => {
+    const currentUser = getCurrentUser();
+    return currentUser.history;
+  };
+
   const getUserFavorite = () => {
     const currentUser = getCurrentUser();
     return currentUser.favoriteIds;
@@ -82,6 +87,7 @@ const StorageProvider = ({ children }) => {
         removeCardFromFavorite,
         getCurrentUserEmail,
         addSearchToHistory,
+        getUserSearchHistory,
       }}
     >
       {children}
