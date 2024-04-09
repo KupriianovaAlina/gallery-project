@@ -1,7 +1,7 @@
 import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { navigationRoutes } from './routes.js';
-
+import StorageProvider from './components/StorageProvider.jsx'
 
 const MainPage = lazy(() => import('./components/MainPage.jsx'));
 const Header = lazy(() =>
@@ -38,20 +38,22 @@ const Card = lazy(() =>
 
 function App() {
   return (
-    <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Header />
-        <Routes>
-          <Route path={navigationRoutes.main()} element={(<MainPage />)} />
-          <Route path={navigationRoutes.signin()} element={<SignInPage />} />
-          <Route path={navigationRoutes.card()} element={(<Card />)} />
-          <Route path={navigationRoutes.signup()} element={<SignUpPage />} />
-          <Route path={navigationRoutes.favorites()} element={<Favorites />} />
-          <Route path={navigationRoutes.history()} element={<History />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+    <StorageProvider>
+      <BrowserRouter>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Header />
+          <Routes>
+            <Route path={navigationRoutes.main()} element={(<MainPage />)} />
+            <Route path={navigationRoutes.signin()} element={<SignInPage />} />
+            <Route path={navigationRoutes.card()} element={(<Card />)} />
+            <Route path={navigationRoutes.signup()} element={<SignUpPage />} />
+            <Route path={navigationRoutes.favorites()} element={<Favorites />} />
+            <Route path={navigationRoutes.history()} element={<History />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </StorageProvider>
   );
 }
 

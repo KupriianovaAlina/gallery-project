@@ -8,8 +8,10 @@ const url = ({
   status,
   gender,
   id,
+  ids,
 }: FetchDataParams): string => {
   if (id) return `${API_URL_ROOT}/${id}`;
+  if (ids) return `${API_URL_ROOT}/${ids.join(",")}`;
 
   const params = new URLSearchParams(`page=${pageNumber}`);
 
@@ -25,6 +27,50 @@ export const fetchData = createAsyncThunk(
   async (params: FetchDataParams, { rejectWithValue }) => {
     try {
       const response = await fetch(url(params));
+      const data = await response.json();
+
+      if (!response.ok || data.error) {
+        const errorMessage = data.message || 'Ошибка при выполнении запроса';
+        if (errorMessage === 'There is nothing here') {
+          return rejectWithValue('Нет результатов');
+        }
+        return rejectWithValue(errorMessage);
+      }
+      return data;
+    } catch (error: any) {
+      console.error('Произошла ошибка:', error.message);
+      rejectWithValue(error);
+    }
+  },
+);
+
+export const fetchCharacter = createAsyncThunk(
+  'fetchCharacter',
+  async (id: number, { rejectWithValue }) => {
+    try {
+      const response = await fetch(url({ id }));
+      const data = await response.json();
+
+      if (!response.ok || data.error) {
+        const errorMessage = data.message || 'Ошибка при выполнении запроса';
+        if (errorMessage === 'There is nothing here') {
+          return rejectWithValue('Нет результатов');
+        }
+        return rejectWithValue(errorMessage);
+      }
+      return data;
+    } catch (error: any) {
+      console.error('Произошла ошибка:', error.message);
+      rejectWithValue(error);
+    }
+  },
+);
+
+export const fetchFavoriteCharacters = createAsyncThunk(
+  'fetchFavoriteCharacters',
+  async (ids: number[], { rejectWithValue }) => {
+    try {
+      const response = await fetch(url({ ids }));
       const data = await response.json();
 
       if (!response.ok || data.error) {
