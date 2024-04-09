@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   charactersSelector,
@@ -12,18 +12,19 @@ import Filters from './Filters/Filters';
 import { filtersActions } from '../slices/filtersSlice';
 import { pagesActions } from '../slices/pagesSlice';
 import { useUrlQueryParams } from './hooks/useUrlQueryParams';
+import { StorageContext } from './StorageProvider';
 
 const MainPage = () => {
+  const dispatch = useDispatch();
   const characters = useSelector(charactersSelector);
   const { nameFilter, statusFilter, genderFilter } =
     useSelector(filtersSelector);
   const { activePage } = useSelector(pagesSelector);
-  const dispatch = useDispatch();
   const { getQueryParams } = useUrlQueryParams();
+  const { isAuthtoraized, addSearchToHistory } = useContext(StorageContext);
 
   useEffect(() => {
     const { page, name, status, gender } = getQueryParams();
-    console.log(page, name, status, gender);
 
     dispatch(pagesActions.setActivePage(page || 1));
     dispatch(filtersActions.setNameFilter(name || ''));
@@ -32,15 +33,15 @@ const MainPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    // запрашиваем карточки с параметрами
-    dispatch(
-      fetchData({
-        pageNumber: activePage,
-        name: nameFilter,
-        status: statusFilter,
-        gender: genderFilter,
-      }),
-    );
+    const params = {
+      pageNumber: activePage,
+      name: nameFilter,
+      status: statusFilter,
+      gender: genderFilter,
+    };
+
+    dispatch(fetchData(params));
+    isAuthtoraized && addSearchToHistory(window.location.href);
   }, [nameFilter, statusFilter, genderFilter, activePage]);
 
   return (

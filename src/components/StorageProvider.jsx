@@ -43,6 +43,17 @@ const StorageProvider = ({ children }) => {
     setUsers(updatedUsers);
   };
 
+  const addSearchToHistory = url => {
+    const users = getUsers();
+    const currentUser = getCurrentUser();
+    currentUser.history.filter(el => el === url).length === 0 &&
+      currentUser.history.push(url);
+    const updatedUsers = users.map(user =>
+      user.email === currentUser.email ? currentUser : user,
+    );
+    setUsers(updatedUsers);
+  };
+
   const getUserFavorite = () => {
     const currentUser = getCurrentUser();
     return currentUser.favoriteIds;
@@ -70,6 +81,7 @@ const StorageProvider = ({ children }) => {
         addCardToFavorite,
         removeCardFromFavorite,
         getCurrentUserEmail,
+        addSearchToHistory,
       }}
     >
       {children}
