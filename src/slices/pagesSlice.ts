@@ -14,7 +14,7 @@ const pagesSlice = createSlice({
   initialState,
   reducers: {
     setActivePage: (state, { payload: newActivePage }) => {
-      state.activePage = newActivePage;
+      state.activePage = Number(newActivePage);
     },
   },
   extraReducers: builder => {

@@ -1,22 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { filtersActions } from '../../slices/filtersSlice';
-import { pagesActions } from '../../slices/pagesSlice';
-import { fetchData } from '../../slices/sharedThunks';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { filtersSelector } from '../../slices/selectors';
 import { CloseButton } from '../shared/CloseButton';
+import { useUrlQueryParams } from '../hooks/useUrlQueryParams';
+import { filtersActions } from '../../slices/filtersSlice';
+import { pagesActions } from '../../slices/pagesSlice';
 
 export const FilterSelect = ({ options, id, label }) => {
+  const filter = useSelector(filtersSelector);
   const [selectedOption, setSelectedOption] = useState('');
   const dispatch = useDispatch();
-  const filter = useSelector(filtersSelector);
+  const { updateQueryParams } = useUrlQueryParams();
+
+  const resetActivePage = () => {
+    dispatch(pagesActions.setActivePage(1));
+    updateQueryParams({ page: 1 });
+  };
 
   const handleSelectChange = e => {
-    setSelectedOption(e.target.value);
     e.preventDefault();
+    setSelectedOption(e.target.value);
+    resetActivePage();
   };
+
   const resetSelection = () => {
     setSelectedOption('');
+    resetActivePage();
   };
 
   const setFilterAction = (filterId, value) => {
@@ -31,19 +40,15 @@ export const FilterSelect = ({ options, id, label }) => {
   };
 
   useEffect(() => {
-    const params = {
-      pageNumber: 1,
-      name: filter?.nameFilter,
-      status: filter?.statusFilter,
-      gender: filter?.genderFilter,
-    };
-    params[id] = selectedOption;
-
     const filterAction = setFilterAction(id, selectedOption);
     dispatch(filterAction);
-    dispatch(pagesActions.setActivePage(1));
-    dispatch(fetchData(params));
+
+    updateQueryParams({ [id]: selectedOption });
   }, [selectedOption, id, dispatch]);
+
+  useEffect(() => {
+    setSelectedOption(filter[`${id}Filter`] || '');
+  }, [filter[`${id}Filter`]]);
 
   return (
     <div>

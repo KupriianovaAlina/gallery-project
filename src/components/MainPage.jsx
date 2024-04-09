@@ -1,19 +1,47 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { charactersSelector, pagesSelector } from '../slices/selectors';
+import {
+  charactersSelector,
+  filtersSelector,
+  pagesSelector,
+} from '../slices/selectors';
 import { fetchData } from '../slices/sharedThunks';
 import Gallery from './Gallery';
 import { Pagination } from '../components/Pagination';
-import Filters from "./Filters/Filters";
+import Filters from './Filters/Filters';
+import { filtersActions } from '../slices/filtersSlice';
+import { pagesActions } from '../slices/pagesSlice';
+import { useUrlQueryParams } from './hooks/useUrlQueryParams';
 
 const MainPage = () => {
   const characters = useSelector(charactersSelector);
-  const pages = useSelector(pagesSelector);
+  const { nameFilter, statusFilter, genderFilter } =
+    useSelector(filtersSelector);
+  const { activePage } = useSelector(pagesSelector);
   const dispatch = useDispatch();
+  const { getQueryParams } = useUrlQueryParams();
 
   useEffect(() => {
-    dispatch(fetchData(pages.activePage));
+    const { page, name, status, gender } = getQueryParams();
+    console.log(page, name, status, gender);
+
+    dispatch(pagesActions.setActivePage(page || 1));
+    dispatch(filtersActions.setNameFilter(name || ''));
+    dispatch(filtersActions.setStatusFilter(status || ''));
+    dispatch(filtersActions.setGenderFilter(gender || ''));
   }, [dispatch]);
+
+  useEffect(() => {
+    // запрашиваем карточки с параметрами
+    dispatch(
+      fetchData({
+        pageNumber: activePage,
+        name: nameFilter,
+        status: statusFilter,
+        gender: genderFilter,
+      }),
+    );
+  }, [nameFilter, statusFilter, genderFilter, activePage]);
 
   return (
     <div className="flex flex-col justify-center items-center py-10">
