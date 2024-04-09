@@ -4,7 +4,7 @@ import { charactersSelector, pagesSelector } from '../slices/selectors';
 import { fetchData } from '../slices/sharedThunks';
 import Gallery from './Gallery';
 import { Pagination } from '../components/Pagination';
-import Filters from "./Filters/Filters";
+import { Filters } from './Filters/Filters';
 
 const MainPage = () => {
   const characters = useSelector(charactersSelector);

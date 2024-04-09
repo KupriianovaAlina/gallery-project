@@ -1,70 +1,75 @@
+import { store } from './index';
+
 export type pagesState = {
-  numberOfPages: number | null,
-  activePage: number,
-  fetchStatus: Status,
-  error: string | null
-}
+  numberOfPages: number | null;
+  activePage: number;
+  fetchStatus: Status;
+  error: string | null;
+};
 
 export type charactersState = {
-  byIds: Record<number, Character>,
-  allIds: number[],
-  favoriteIds: number[],
-  currentCharacter: Character | {},
-  fetchStatus: Status,
-}
+  byIds: Record<number, Character>;
+  allIds: number[];
+  favoriteIds: number[];
+  currentCharacter: Character | {};
+  fetchStatus: Status;
+};
 
 export type Character = {
-  created: string,
-  episode: string[],
-  gender: string,
-  id: number,
-  image: string,
+  created: string;
+  episode: string[];
+  gender: string;
+  id: number;
+  image: string;
   location: {
-    name: string,
-    url: string
-  },
-  name: string,
+    name: string;
+    url: string;
+  };
+  name: string;
   origin: {
-    name: string, url: string
-  },
-  species: string,
-  status: string,
-  type: string,
-  url: string
-}
+    name: string;
+    url: string;
+  };
+  species: string;
+  status: string;
+  type: string;
+  url: string;
+};
 
 export type Info = {
-  count: number,
-  next: string,
-  pages: number,
-  prev: null | string,
-  filters: string | undefined
-}
+  count: number;
+  next: string;
+  pages: number;
+  prev: null | string;
+  filters: string | undefined;
+};
 
 export type Payload = {
-  info: Info,
-  results: Character[]
-}
+  info: Info;
+  results: Character[];
+};
 
 export type Status = 'idle' | 'pending' | 'rejected' | 'fulfilled';
 
 export type filtersState = {
-  nameFilter: string,
-  statusFilter: string,
-  genderFilter: string,
-  fetchStatus: Status
-}
+  nameFilter: string;
+  statusFilter: string;
+  genderFilter: string;
+  fetchStatus: Status;
+};
 
 export type FetchDataParams = {
-  pageNumber: number,
-  name?: string,
-  status?: string,
-  gender?: string,
-  id?: string,
-}
+  pageNumber: number;
+  name?: string;
+  status?: string;
+  gender?: string;
+  [key: string]: any;
+};
 
 export type FilterSelectProps = {
-  options: { label: string; value: string }[],
-  id: string,
-  label: string
-}
+  options: { label: string; value: string }[];
+  id: string;
+  label: string;
+};
+
+export type AppDispatch = typeof store.dispatch;

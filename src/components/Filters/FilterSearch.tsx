@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { fetchData } from '../../slices/sharedThunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { filtersActions } from '../../slices/filtersSlice';
@@ -6,18 +6,20 @@ import { pagesActions } from '../../slices/pagesSlice';
 import { useDebounce } from '../hooks/debounce';
 import { filtersSelector } from '../../slices/selectors';
 import { CloseButton } from '../shared/CloseButton';
+import { AppDispatch } from '../../slices/types';
 
 const FilterSearch = () => {
   const [inputValue, setInputValue] = useState('');
   const debouncedSearchTerm = useDebounce(inputValue, 500);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const filter = useSelector(filtersSelector);
 
   const resetSearch = () => {
     setInputValue('');
   };
-  const handleInputChange = e => {
-    setInputValue(e.target.value);
+  const handleInputChange = (e: SyntheticEvent) => {
+    const { value } = e.target as HTMLInputElement;
+    setInputValue(value);
     e.preventDefault();
   };
 
