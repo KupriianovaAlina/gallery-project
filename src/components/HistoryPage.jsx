@@ -1,22 +1,25 @@
 import { useContext } from 'react';
 import { StorageContext } from './StorageProvider';
+import { FaLink } from 'react-icons/fa';
 
 export const History = () => {
   const storage = useContext(StorageContext);
-
   const urls = storage.getUserSearchHistory().reverse();
-  console.log(urls);
 
   return (
-    <div className="flex flex-col justify-center items-center py-10">
-      <h2 className="font-acme text-white text-6xl mb-10">{'User history'}</h2>
+    <div className="flex flex-col justify-center items-center py-10 bg-gray">
+      <h2 className="font-black font-system text-white text-6xl mb-10">
+        {'User history'}
+      </h2>
       <ul>
         {urls.map((url, index) => {
-          console.log(url);
           return (
-            <li key={index} className="text-white">
+            <li key={index} className="text-white mb-2">
               <a href={url}>
-                <p>{url}</p>
+                <p>
+                  <FaLink className="inline" style={{ color: '#ffffff' }} />{' '}
+                  {url}
+                </p>
               </a>
             </li>
           );

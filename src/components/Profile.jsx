@@ -1,6 +1,7 @@
-import { NavLink } from 'react-router-dom';
 import { useContext } from 'react';
 import { StorageContext } from './StorageProvider';
+import { Button } from './Button';
+import { FaUser } from 'react-icons/fa';
 
 export const Profile = () => {
   const storage = useContext(StorageContext);
@@ -10,23 +11,16 @@ export const Profile = () => {
   };
 
   return (
-    <div className="lg:absolute lg:top-5 lg:right-7 min-[320px]:text-center">
-      <div className="mb-10">
-        <div className="flex items-center justify-center text-white my-5">
-          <img
-            className="w-10 h-10"
-            src="/images/userIcon.png"
-            alt="UserIcon"
-          />
-          <p>User Email: {storage.getCurrentUserEmail()}</p>
+    <div className="absolute top-2 right-10 min-[320px]:text-center">
+      <div className="flex mb-10">
+        <div className="lg:flex hidden flex items-center justify-center text-gray my-2">
+          <FaUser className="mr-2" style={{ color: '#272B33' }} />
+          <p className="text-gray md:text-base text-sm">
+            {storage.getCurrentUserEmail()}
+          </p>
         </div>
-        <NavLink
-          className="header-button inline-block w-28 text-center py-2 text-black rounded-md transition-colors duration-300"
-          onClick={handleLogout}
-        >
-          Log Out
-        </NavLink>
+        <Button text="Log Out" onClick={handleLogout} />
       </div>
     </div>
   );
-}
+};
