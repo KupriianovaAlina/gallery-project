@@ -4,7 +4,7 @@ import FavoriteButton from './FavoriteButton';
 import { StorageContext } from './StorageProvider';
 import { useContext } from 'react';
 
-const CardPreview = ({ character }) => {
+const CardPreview = ({ character, onImageLoaded }) => {
   const storage = useContext(StorageContext);
 
   return (
@@ -16,6 +16,7 @@ const CardPreview = ({ character }) => {
             alt="gallery"
             className=" w-2/5 object-cover object-center rounded-l-lg"
             src={character.image}
+            onLoad={onImageLoaded}
           />
           <div className="flex flex-col ml-4 my-4 justify-between">
             <div>
