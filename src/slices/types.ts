@@ -63,7 +63,7 @@ export type FetchDataParams = {
   status?: string;
   gender?: string;
   [key: string]: any;
-  id?: number;
+  id?: string;
   ids?: number[];
 };
 

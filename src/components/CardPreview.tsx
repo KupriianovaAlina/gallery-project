@@ -3,8 +3,13 @@ import { navigationRoutes } from '../routes';
 import FavoriteButton from './FavoriteButton';
 import { StorageContext } from './StorageProvider';
 import { useContext } from 'react';
+import { Character } from '../slices/types';
 
-const CardPreview = ({ character }) => {
+interface CardPreviewProps {
+  character: Character;
+}
+
+const CardPreview: React.FC<CardPreviewProps> = ({ character }) => {
   const storage = useContext(StorageContext);
 
   return (
@@ -33,7 +38,7 @@ const CardPreview = ({ character }) => {
         </div>
       </Link>
     </div>
-  )
+  );
 };
 
 export default CardPreview;

@@ -15,11 +15,11 @@ export const Card = () => {
   const params = useParams();
   const storage = useContext(StorageContext);
 
-  const id = params.id.slice(1);
+  const id = params.id?.slice(1);
   const characters = useSelector(charactersSelector);
   const character = characters.currentCharacter;
 
-  const { isTelegramShareEnabled } = useFeatureFlags();
+  const { isTelegramShareEnabled } = useFeatureFlags() || {};
 
   useEffect(() => {
     dispatch(fetchCharacter(id));
@@ -69,10 +69,15 @@ export const Card = () => {
             </p>
             <p>
               <strong>Episodes: </strong>
-              {character.episode?.reduce((acc, episode) => {
-                if (acc === '') return episode.match(/\d+/)[0];
-                return `${acc}, ${episode.match(/\d+/)[0]}`;
-              }, '')}
+              {character?.episode
+                ?.map((episode: string | null) => {
+                  if (episode) {
+                    return episode.match(/\d+/)?.[0];
+                  }
+                  return null;
+                })
+                .filter(Boolean)
+                .join(', ')}
             </p>
             {isTelegramShareEnabled && (
               <ShareButton text={`Learn about ${character.name}`} />
