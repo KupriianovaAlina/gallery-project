@@ -1,10 +1,10 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { filtersSelector, pagesSelector } from '../slices/selectors';
 import { fetchData } from '../slices/sharedThunks';
 import Gallery from './Gallery';
-import { Pagination } from '../components/Pagination';
-import Filters from './Filters/Filters';
+import { Pagination } from './Pagination';
+import { Filters } from './Filters/index';
 import { filtersActions } from '../slices/filtersSlice';
 import { pagesActions } from '../slices/pagesSlice';
 import { useUrlQueryParams } from './hooks/useUrlQueryParams';
@@ -17,6 +17,7 @@ const MainPage = () => {
   const { activePage } = useSelector(pagesSelector);
   const { getQueryParams } = useUrlQueryParams();
   const { isAuthtoraized, addSearchToHistory } = useContext(StorageContext);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const { page, name, status, gender } = getQueryParams();
@@ -28,16 +29,38 @@ const MainPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const params = {
-      pageNumber: activePage,
-      name: nameFilter,
-      status: statusFilter,
-      gender: genderFilter,
+    const fetchDataAndHandleLoading = async () => {
+      setIsLoading(true);
+
+      const params = {
+        pageNumber: activePage,
+        name: nameFilter,
+        status: statusFilter,
+        gender: genderFilter,
+      };
+
+      try {
+        await dispatch(fetchData(params)).unwrap();
+        setIsLoading(false);
+        if (isAuthtoraized) {
+          addSearchToHistory(window.location.href);
+        }
+      } catch (error) {
+        console.error('Ошибка при загрузке данных:', error);
+        setIsLoading(false);
+      }
     };
 
-    dispatch(fetchData(params));
-    isAuthtoraized && addSearchToHistory(window.location.href);
-  }, [nameFilter, statusFilter, genderFilter, activePage]);
+    fetchDataAndHandleLoading();
+  }, [
+    dispatch,
+    activePage,
+    nameFilter,
+    statusFilter,
+    genderFilter,
+    isAuthtoraized,
+    addSearchToHistory,
+  ]);
 
   return (
     <div className="flex flex-col justify-center items-center py-10">
@@ -47,8 +70,16 @@ const MainPage = () => {
         </h2>
       </section>
       <Filters />
-      <Gallery />
-      <Pagination />
+      {isLoading ? (
+        <div className="text-center font-sans text-5xl font-semibold text-white">
+          Loading...
+        </div>
+      ) : (
+        <>
+          <Gallery setImagesLoading={setIsLoading} />
+          <Pagination />
+        </>
+      )}
     </div>
   );
 };

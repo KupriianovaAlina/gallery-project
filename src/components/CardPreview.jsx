@@ -4,7 +4,7 @@ import FavoriteButton from './FavoriteButton';
 import { StorageContext } from './StorageProvider';
 import { useContext } from 'react';
 
-const CardPreview = ({ character }) => {
+const CardPreview = ({ character, onImageLoaded }) => {
   const storage = useContext(StorageContext);
 
   return (
@@ -16,6 +16,7 @@ const CardPreview = ({ character }) => {
             alt="gallery"
             className="absolute inset-0 w-full h-full object-cover object-center rounded-xl"
             src={character.image}
+            onLoad={onImageLoaded}
           />
           <div className="flex flex-col justify-between	h-full w-full px-8 py-10 relative z-10 bg-gray-800 opacity-0 hover:opacity-90 rounded-xl text-white">
             <div>
@@ -33,7 +34,7 @@ const CardPreview = ({ character }) => {
         </div>
       </Link>
     </div>
-  )
+  );
 };
 
 export default CardPreview;
