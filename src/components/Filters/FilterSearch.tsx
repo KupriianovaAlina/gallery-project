@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
+import { fetchData } from '../../slices/sharedThunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDebounce } from '../hooks/useDebounce';
 import { filtersSelector } from '../../slices/selectors';
@@ -6,13 +7,14 @@ import { CloseButton } from '../shared/CloseButton';
 import { useUrlQueryParams } from '../hooks/useUrlQueryParams';
 import { filtersActions } from '../../slices/filtersSlice';
 import { pagesActions } from '../../slices/pagesSlice';
+import { AppDispatch } from '../../slices/types';
 
 const FilterSearch = () => {
   const [inputValue, setInputValue] = useState('');
   const { updateQueryParams } = useUrlQueryParams();
 
   const debouncedSearchTerm = useDebounce(inputValue, 500);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const filter = useSelector(filtersSelector);
 
   const resetActivePage = () => {
@@ -25,8 +27,9 @@ const FilterSearch = () => {
     resetActivePage();
   };
 
-  const handleInputChange = e => {
-    setInputValue(e.target.value);
+  const handleInputChange = (e: SyntheticEvent) => {
+    const { value } = e.target as HTMLInputElement;
+    setInputValue(value);
     e.preventDefault();
     resetActivePage();
   };

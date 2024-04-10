@@ -1,5 +1,4 @@
 import FilterSearch from './FilterSearch';
-
 import { genders, statuses } from './constants';
 import { FilterSelect } from './FilterSelect';
 

@@ -1,10 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  charactersSelector,
-  filtersSelector,
-  pagesSelector,
-} from '../slices/selectors';
+import { filtersSelector, pagesSelector } from '../slices/selectors';
 import { fetchData } from '../slices/sharedThunks';
 import Gallery from './Gallery';
 import { Pagination } from '../components/Pagination';
@@ -16,7 +12,6 @@ import { StorageContext } from './StorageProvider';
 
 const MainPage = () => {
   const dispatch = useDispatch();
-  const characters = useSelector(charactersSelector);
   const { nameFilter, statusFilter, genderFilter } =
     useSelector(filtersSelector);
   const { activePage } = useSelector(pagesSelector);

@@ -5,12 +5,13 @@ import {
   fetchFavoriteCharacters,
 } from './sharedThunks';
 import { Payload, Character, charactersState as State } from './types';
+import { FETCH_STATUS } from '../utils/constants';
 
 const initialState: State = {
   byIds: {},
   allIds: [],
   currentCharacter: {},
-  fetchStatus: 'idle',
+  fetchStatus: FETCH_STATUS.Idle,
 };
 
 const charactersSlice = createSlice({
@@ -31,14 +32,14 @@ const charactersSlice = createSlice({
           );
           state.byIds = byId;
           state.allIds = Object.keys(byId).map(Number);
-          state.fetchStatus = 'fulfilled';
+          state.fetchStatus = FETCH_STATUS.Fulfilled;
         },
       )
       .addCase(fetchData.pending, state => {
-        state.fetchStatus = 'pending';
+        state.fetchStatus = FETCH_STATUS.Pending;
       })
       .addCase(fetchData.rejected, (state, action) => {
-        state.fetchStatus = 'rejected';
+        state.fetchStatus = FETCH_STATUS.Rejected;
       })
       .addCase(
         fetchCharacter.fulfilled,

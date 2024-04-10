@@ -1,15 +1,21 @@
-import { useEffect, useState } from 'react';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { filtersSelector } from '../../slices/selectors';
 import { CloseButton } from '../shared/CloseButton';
 import { useUrlQueryParams } from '../hooks/useUrlQueryParams';
 import { filtersActions } from '../../slices/filtersSlice';
 import { pagesActions } from '../../slices/pagesSlice';
+import { FilterSelectProps } from './types/types';
+import { AppDispatch } from '../../slices/types';
 
-export const FilterSelect = ({ options, id, label }) => {
+export const FilterSelect: React.FC<FilterSelectProps> = ({
+  options,
+  id,
+  label,
+}) => {
   const filter = useSelector(filtersSelector);
   const [selectedOption, setSelectedOption] = useState('');
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const { updateQueryParams } = useUrlQueryParams();
 
   const resetActivePage = () => {
@@ -17,9 +23,10 @@ export const FilterSelect = ({ options, id, label }) => {
     updateQueryParams({ page: 1 });
   };
 
-  const handleSelectChange = e => {
+  const handleSelectChange = (e: SyntheticEvent) => {
+    const { value } = e.target as HTMLInputElement;
     e.preventDefault();
-    setSelectedOption(e.target.value);
+    setSelectedOption(value);
     resetActivePage();
   };
 
@@ -28,7 +35,7 @@ export const FilterSelect = ({ options, id, label }) => {
     resetActivePage();
   };
 
-  const setFilterAction = (filterId, value) => {
+  const setFilterAction = (filterId: string, value: string) => {
     switch (filterId) {
       case 'status':
         return filtersActions.setStatusFilter(value);
