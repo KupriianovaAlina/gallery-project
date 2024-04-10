@@ -1,3 +1,5 @@
+import { store } from './index';
+
 export type pagesState = {
   numberOfPages: number | null;
   activePage: number;
@@ -60,6 +62,7 @@ export type FetchDataParams = {
   name?: string;
   status?: string;
   gender?: string;
+  [key?: string]: any;
   id?: number;
   ids?: number[];
 };
@@ -69,3 +72,10 @@ export type FilterSelectProps = {
   id: string;
   label: string;
 };
+
+  options: { label: string; value: string }[];
+  id: string;
+  label: string;
+};
+
+export type AppDispatch = typeof store.dispatch;

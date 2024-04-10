@@ -1,25 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { filtersActions } from '../../slices/filtersSlice';
 import { pagesActions } from '../../slices/pagesSlice';
 import { fetchData } from '../../slices/sharedThunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { filtersSelector } from '../../slices/selectors';
 import { CloseButton } from '../shared/CloseButton';
+import { AppDispatch, FetchDataParams } from '../../slices/types';
+import { FilterSelectProps } from './types/types';
 
-export const FilterSelect = ({ options, id, label }) => {
+export const FilterSelect: React.FC<FilterSelectProps> = ({
+  options,
+  id,
+  label,
+}) => {
   const [selectedOption, setSelectedOption] = useState('');
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const filter = useSelector(filtersSelector);
 
-  const handleSelectChange = e => {
-    setSelectedOption(e.target.value);
+  const handleSelectChange = (e: SyntheticEvent) => {
+    const { value } = e.target as HTMLInputElement;
+    setSelectedOption(value);
     e.preventDefault();
   };
   const resetSelection = () => {
     setSelectedOption('');
   };
 
-  const setFilterAction = (filterId, value) => {
+  const setFilterAction = (filterId: string, value: string) => {
     switch (filterId) {
       case 'status':
         return filtersActions.setStatusFilter(value);
@@ -31,7 +38,7 @@ export const FilterSelect = ({ options, id, label }) => {
   };
 
   useEffect(() => {
-    const params = {
+    const params: FetchDataParams = {
       pageNumber: 1,
       name: filter?.nameFilter,
       status: filter?.statusFilter,
@@ -40,7 +47,9 @@ export const FilterSelect = ({ options, id, label }) => {
     params[id] = selectedOption;
 
     const filterAction = setFilterAction(id, selectedOption);
-    dispatch(filterAction);
+    if (filterAction) {
+      dispatch(filterAction);
+    }
     dispatch(pagesActions.setActivePage(1));
     dispatch(fetchData(params));
   }, [selectedOption, id, dispatch]);
