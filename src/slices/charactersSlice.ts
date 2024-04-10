@@ -24,9 +24,9 @@ const charactersSlice = createSlice({
         fetchData.fulfilled,
         (state, { payload }: PayloadAction<Payload>) => {
           const byId: Record<number, Character> = payload.results.reduce(
-            (byId, character) => {
-              byId[character.id] = character;
-              return byId;
+            (accumulator: Record<number, Character>, character: Character) => {
+              accumulator[character.id] = character;
+              return accumulator;
             },
             {} as Record<number, Character>,
           );
@@ -57,9 +57,9 @@ const charactersSlice = createSlice({
       .addCase(fetchFavoriteCharacters.fulfilled, (state, { payload }) => {
         const characters = payload.length ? payload : [payload];
         const byId: Record<number, Character> = characters.reduce(
-          (byId, character) => {
-            byId[character.id] = character;
-            return byId;
+          (accumulator: Record<number, Character>, character: Character) => {
+            accumulator[character.id] = character;
+            return accumulator;
           },
           {} as Record<number, Character>,
         );

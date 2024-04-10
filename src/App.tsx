@@ -1,7 +1,7 @@
 import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { navigationRoutes } from './routes';
-import StorageProvider from './components/StorageProvider.jsx';
+import StorageProvider from './components/StorageProvider';
 
 const MainPage = lazy(() => import('./components/MainPage.jsx'));
 const Header = lazy(() =>

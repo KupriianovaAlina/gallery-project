@@ -42,16 +42,17 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({
       case 'gender':
         return filtersActions.setGenderFilter(value);
       default:
-        break;
+        throw new Error(`Unknown filterId: ${filterId}`);
     }
   };
 
   useEffect(() => {
     const filterAction = setFilterAction(id, selectedOption);
-    dispatch(filterAction);
-
-    updateQueryParams({ [id]: selectedOption });
-  }, [selectedOption, id, dispatch]);
+    if (filterAction) {
+      dispatch(filterAction);
+      updateQueryParams({ [id]: selectedOption });
+    }
+  }, [selectedOption, id, dispatch, updateQueryParams]);
 
   useEffect(() => {
     setSelectedOption(filter[`${id}Filter`] || '');

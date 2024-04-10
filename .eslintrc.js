@@ -1,12 +1,13 @@
 module.exports = {
   env: {
-    browser: false,
+    browser: true,
     es2021: true,
   },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:prettier/recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
   overrides: [
     {
@@ -19,23 +20,27 @@ module.exports = {
       },
     },
     {
-      files: ['*.ts'],
+      files: ['.ts', '.tsx'],
+      parser: '@typescript-eslint/parser',
+      plugins: ['@typescript-eslint'],
       rules: {
         'no-undef': 'off',
-      },
-    },
-    {
-      files: ['*.ts'],
-      rules: {
         'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': ['warn'],
       },
     },
   ],
   parserOptions: {
     ecmaVersion: 2021,
     sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
-  plugins: ['react'],
+  plugins: [
+    'react',
+    '@typescript-eslint', // Добавлено
+  ],
   rules: {
     'no-var': 'error',
     'prefer-const': 'warn',
@@ -47,5 +52,18 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      {
+        vars: 'all',
+        args: 'after-used',
+        ignoreRestSiblings: false,
+      },
+    ],
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
   },
 };
