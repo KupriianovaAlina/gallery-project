@@ -62,17 +62,12 @@ export type FetchDataParams = {
   name?: string;
   status?: string;
   gender?: string;
-  [key?: string]: any;
+  [key: string]: any;
   id?: number;
   ids?: number[];
 };
 
 export type FilterSelectProps = {
-  options: { label: string; value: string }[];
-  id: string;
-  label: string;
-};
-
   options: { label: string; value: string }[];
   id: string;
   label: string;
