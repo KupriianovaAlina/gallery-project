@@ -1,40 +1,48 @@
 import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { fetchData } from '../../slices/sharedThunks';
 import { useDispatch, useSelector } from 'react-redux';
-import { filtersActions } from '../../slices/filtersSlice';
-import { pagesActions } from '../../slices/pagesSlice';
-import { useDebounce } from '../hooks/debounce';
+import { useDebounce } from '../hooks/useDebounce';
 import { filtersSelector } from '../../slices/selectors';
 import { CloseButton } from '../shared/CloseButton';
+import { useUrlQueryParams } from '../hooks/useUrlQueryParams';
+import { filtersActions } from '../../slices/filtersSlice';
+import { pagesActions } from '../../slices/pagesSlice';
 import { AppDispatch } from '../../slices/types';
 
 const FilterSearch = () => {
   const [inputValue, setInputValue] = useState('');
+  const { updateQueryParams } = useUrlQueryParams();
+
   const debouncedSearchTerm = useDebounce(inputValue, 500);
   const dispatch: AppDispatch = useDispatch();
   const filter = useSelector(filtersSelector);
 
+  const resetActivePage = () => {
+    dispatch(pagesActions.setActivePage(1));
+    updateQueryParams({ page: 1 });
+  };
+
   const resetSearch = () => {
     setInputValue('');
+    resetActivePage();
   };
+
   const handleInputChange = (e: SyntheticEvent) => {
     const { value } = e.target as HTMLInputElement;
     setInputValue(value);
     e.preventDefault();
+    resetActivePage();
   };
 
   useEffect(() => {
     dispatch(filtersActions.setNameFilter(debouncedSearchTerm));
-    dispatch(pagesActions.setActivePage(1));
-    dispatch(
-      fetchData({
-        pageNumber: 1,
-        name: debouncedSearchTerm,
-        status: filter?.statusFilter,
-        gender: filter?.genderFilter,
-      }),
-    );
+
+    updateQueryParams({ name: debouncedSearchTerm });
   }, [debouncedSearchTerm, dispatch]);
+
+  useEffect(() => {
+    setInputValue(filter[`nameFilter`]);
+  }, [filter[`nameFilter`]]);
 
   return (
     <div className="relative mt-2 rounded-md shadow-sm">

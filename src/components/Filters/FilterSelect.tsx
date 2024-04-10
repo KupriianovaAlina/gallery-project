@@ -1,29 +1,38 @@
 import React, { SyntheticEvent, useEffect, useState } from 'react';
-import { filtersActions } from '../../slices/filtersSlice';
-import { pagesActions } from '../../slices/pagesSlice';
-import { fetchData } from '../../slices/sharedThunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { filtersSelector } from '../../slices/selectors';
 import { CloseButton } from '../shared/CloseButton';
-import { AppDispatch, FetchDataParams } from '../../slices/types';
+import { useUrlQueryParams } from '../hooks/useUrlQueryParams';
+import { filtersActions } from '../../slices/filtersSlice';
+import { pagesActions } from '../../slices/pagesSlice';
 import { FilterSelectProps } from './types/types';
+import { AppDispatch } from '../../slices/types';
 
 export const FilterSelect: React.FC<FilterSelectProps> = ({
   options,
   id,
   label,
 }) => {
+  const filter = useSelector(filtersSelector);
   const [selectedOption, setSelectedOption] = useState('');
   const dispatch: AppDispatch = useDispatch();
-  const filter = useSelector(filtersSelector);
+  const { updateQueryParams } = useUrlQueryParams();
+
+  const resetActivePage = () => {
+    dispatch(pagesActions.setActivePage(1));
+    updateQueryParams({ page: 1 });
+  };
 
   const handleSelectChange = (e: SyntheticEvent) => {
     const { value } = e.target as HTMLInputElement;
-    setSelectedOption(value);
     e.preventDefault();
+    setSelectedOption(value);
+    resetActivePage();
   };
+
   const resetSelection = () => {
     setSelectedOption('');
+    resetActivePage();
   };
 
   const setFilterAction = (filterId: string, value: string) => {
@@ -38,21 +47,15 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({
   };
 
   useEffect(() => {
-    const params: FetchDataParams = {
-      pageNumber: 1,
-      name: filter?.nameFilter,
-      status: filter?.statusFilter,
-      gender: filter?.genderFilter,
-    };
-    params[id] = selectedOption;
-
     const filterAction = setFilterAction(id, selectedOption);
-    if (filterAction) {
-      dispatch(filterAction);
-    }
-    dispatch(pagesActions.setActivePage(1));
-    dispatch(fetchData(params));
+    dispatch(filterAction);
+
+    updateQueryParams({ [id]: selectedOption });
   }, [selectedOption, id, dispatch]);
+
+  useEffect(() => {
+    setSelectedOption(filter[`${id}Filter`] || '');
+  }, [filter[`${id}Filter`]]);
 
   return (
     <div>

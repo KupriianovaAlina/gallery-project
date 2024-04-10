@@ -10,16 +10,17 @@ export const Favorites = () => {
   const dispatch = useDispatch();
 
   const storage = useContext(StorageContext);
+  const favorites = storage.getUserFavorite();
 
   useEffect(() => {
-    dispatch(fetchFavoriteCharacters(storage.getUserFavorite()));
-  }, [dispatch]);
+    dispatch(fetchFavoriteCharacters(favorites));
+  }, [dispatch, favorites]);
 
   return (
     <div className="flex flex-col justify-center items-center py-10">
       <section>
         <h2 className="font-acme text-white text-6xl mb-10">
-          {"Characters' gallery"}
+          {"Favorite characters' gallery"}
         </h2>
       </section>
       <Gallery characters={characters} />

@@ -1,39 +1,26 @@
 import React from 'react';
-import { filtersSelector, pagesSelector } from '../slices/selectors';
+import { pagesSelector } from '../slices/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { pagesActions } from '../slices/pagesSlice';
-import { fetchData } from '../slices/sharedThunks';
+import { useUrlQueryParams } from './hooks/useUrlQueryParams';
 
 export function Pagination() {
   const pages = useSelector(pagesSelector);
   const dispatch = useDispatch();
-  const filter = useSelector(filtersSelector);
+  const { updateQueryParams } = useUrlQueryParams();
+
   const next = () => {
     if (pages.activePage === pages.numberOfPages) return;
     const newPage = pages.activePage + 1;
     dispatch(pagesActions.setActivePage(newPage));
-    dispatch(
-      fetchData({
-        pageNumber: newPage,
-        name: filter.nameFilter,
-        status: filter.statusFilter,
-        gender: filter.genderFilter,
-      }),
-    );
+    updateQueryParams({ page: newPage });
   };
 
   const prev = () => {
     if (pages.activePage === 1) return;
     const newPage = pages.activePage - 1;
     dispatch(pagesActions.setActivePage(newPage));
-    dispatch(
-      fetchData({
-        pageNumber: newPage,
-        name: filter.nameFilter,
-        status: filter.statusFilter,
-        gender: filter.genderFilter,
-      }),
-    );
+    updateQueryParams({ page: newPage });
   };
 
   return (

@@ -1,9 +1,14 @@
 import CardPreview from './CardPreview';
+import { useSelector } from 'react-redux';
+import { charactersSelector } from '../slices/selectors';
 
-const Gallery = ({ characters }) => {
-  const { byIds } = characters;
+const Gallery = () => {
+  const characters = useSelector(charactersSelector);
 
-  if (Object.keys(byIds).length === 0) {
+  if (
+    Object.keys(characters.byIds).length === 0 ||
+    characters.fetchStatus === 'rejected'
+  ) {
     return (
       <div className="text-center font-sans text-5xl font-semibold text-white">
         No results
