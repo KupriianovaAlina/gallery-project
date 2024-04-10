@@ -6,6 +6,8 @@ import FavoriteButton from './FavoriteButton';
 import { navigationRoutes } from '../routes';
 import { fetchData } from '../slices/sharedThunks';
 import { NavLink } from 'react-router-dom';
+import { useFeatureFlags } from '../contexts/FeatureFlagsContext';
+import ShareButton from './ShareButton';
 
 export const Card = () => {
   const dispatch = useDispatch();
@@ -14,6 +16,8 @@ export const Card = () => {
   const id = params.id.slice(1);
   const characters = useSelector(charactersSelector);
   const character = characters.currentCharacter;
+
+  const { isTelegramShareEnabled } = useFeatureFlags();
 
   useEffect(() => {
     dispatch(fetchData({ id }));
@@ -68,6 +72,9 @@ export const Card = () => {
                 return `${acc}, ${episode.match(/\d+/)[0]}`;
               }, '')}
             </p>
+            {isTelegramShareEnabled && (
+              <ShareButton text={`Learn about ${character.name}`} />
+            )}
           </div>
         </div>
       </div>
