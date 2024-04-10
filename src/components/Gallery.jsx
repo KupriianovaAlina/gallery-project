@@ -35,7 +35,7 @@ const Gallery = ({ setImagesLoading }) => {
   }
 
   return (
-    <section className="flex flex-wrap gap-10 px-10 justify-center">
+    <section className="flex flex-col lg:flex-row lg:flex-wrap gap-7 px-10 w-full justify-center items-center">
       {Object.values(characters.byIds).map(character => {
         return (
           <CardPreview

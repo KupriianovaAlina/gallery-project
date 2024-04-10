@@ -26,14 +26,6 @@
   color: #b2df28;
 }
 
-body {
-  background-image: url('../public/images/bg.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: top left;
-  background-attachment: fixed;
-}
-
 .header-button {
   background-color: #00b5cc;
 }

@@ -17,9 +17,9 @@ export const Favorites = () => {
   }, [dispatch, favorites]);
 
   return (
-    <div className="flex flex-col justify-center items-center py-10">
+    <div className="flex flex-col justify-center items-center py-10 bg-gray">
       <section>
-        <h2 className="font-acme text-white text-6xl mb-10">
+        <h2 className="font-black font-system text-white text-6xl mb-10">
           {"Favorite characters' gallery"}
         </h2>
       </section>
