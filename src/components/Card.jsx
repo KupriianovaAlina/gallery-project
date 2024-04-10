@@ -1,17 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { charactersSelector } from '../slices/selectors';
 import FavoriteButton from './FavoriteButton';
 import { navigationRoutes } from '../routes';
-import { fetchData } from '../slices/sharedThunks';
+import { fetchCharacter } from '../slices/sharedThunks';
 import { NavLink } from 'react-router-dom';
 import { useFeatureFlags } from '../contexts/FeatureFlagsContext';
 import ShareButton from './ShareButton';
+import { StorageContext } from './StorageProvider';
 
 export const Card = () => {
   const dispatch = useDispatch();
   const params = useParams();
+  const storage = useContext(StorageContext);
 
   const id = params.id.slice(1);
   const characters = useSelector(charactersSelector);
@@ -20,7 +22,7 @@ export const Card = () => {
   const { isTelegramShareEnabled } = useFeatureFlags();
 
   useEffect(() => {
-    dispatch(fetchData({ id }));
+    dispatch(fetchCharacter(id));
   }, [dispatch]);
 
   return (
@@ -29,7 +31,7 @@ export const Card = () => {
         <button className="absolute left-0 -top-12 text-acid hover:opacity-60 text-3xl font-acme">
           <NavLink to={navigationRoutes.main()}>{'<<< Go back'}</NavLink>
         </button>
-        <FavoriteButton />
+        {storage.isAuthtoraized && <FavoriteButton id={character.id} />}
         <div className="relative m-0 w-2/5 shrink-0 overflow-hidden rounded-xl rounded-r-none bg-white bg-clip-border text-gray-700 font-acme">
           <img
             src={character.image}

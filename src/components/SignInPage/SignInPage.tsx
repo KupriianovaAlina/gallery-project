@@ -1,13 +1,17 @@
 import { ERROR_MESSAGES, INITIAL_FORM_DATA } from "../SignUpPage/constants";
 import { navigationRoutes } from "../../routes";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { isCorrectPassword } from "./utils/isCorrectPassword";
 import { isExistEmail } from "./utils/isExistEmail";
 import { Input } from "../shared/Input";
+import { StorageContext } from "../StorageProvider";
+
 
 export const SignInPage = () => {
   const navigate = useNavigate();
+  const storage: any = useContext(StorageContext);
+
   // Initializing form data state with an object for user inputs
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [error, setError] = useState('');
@@ -35,6 +39,7 @@ export const SignInPage = () => {
       } else if (!isCorrectPassword(user, formData.password)) {
         setError(ERROR_MESSAGES.incorrectPassword);
       } else {
+        storage.logIn(formData.email);
         setFormData(INITIAL_FORM_DATA);
         setError('');
         navigate(navigationRoutes.main());

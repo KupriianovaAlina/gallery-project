@@ -1,18 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchData } from './sharedThunks';
 import {
-  Info,
-  Payload,
-  Status,
-  Character,
-  charactersState as State,
-} from './types';
+  fetchData,
+  fetchCharacter,
+  fetchFavoriteCharacters,
+} from './sharedThunks';
+import { Payload, Character, charactersState as State } from './types';
 import { FETCH_STATUS } from '../utils/constants';
 
 const initialState: State = {
   byIds: {},
   allIds: [],
-  favoriteIds: [],
   currentCharacter: {},
   fetchStatus: FETCH_STATUS.Idle,
 };
@@ -26,22 +23,16 @@ const charactersSlice = createSlice({
       .addCase(
         fetchData.fulfilled,
         (state, { payload }: PayloadAction<Payload>) => {
-          if (!payload.results) {
-            state.currentCharacter = payload;
-            state.fetchStatus = FETCH_STATUS.Fulfilled;
-            return;
-          } else {
-            const byId: Record<number, Character> = payload.results.reduce(
-              (byId, character) => {
-                byId[character.id] = character;
-                return byId;
-              },
-              {} as Record<number, Character>,
-            );
-            state.byIds = byId;
-            state.allIds = Object.keys(byId).map(Number);
-            state.fetchStatus = FETCH_STATUS.Fulfilled;
-          }
+          const byId: Record<number, Character> = payload.results.reduce(
+            (byId, character) => {
+              byId[character.id] = character;
+              return byId;
+            },
+            {} as Record<number, Character>,
+          );
+          state.byIds = byId;
+          state.allIds = Object.keys(byId).map(Number);
+          state.fetchStatus = FETCH_STATUS.Fulfilled;
         },
       )
       .addCase(fetchData.pending, state => {
@@ -49,7 +40,37 @@ const charactersSlice = createSlice({
       })
       .addCase(fetchData.rejected, (state, action) => {
         state.fetchStatus = FETCH_STATUS.Rejected;
-        state.byIds = {};
+      })
+      .addCase(
+        fetchCharacter.fulfilled,
+        (state, { payload }: PayloadAction<Payload>) => {
+          state.currentCharacter = payload;
+          state.fetchStatus = 'fulfilled';
+        },
+      )
+      .addCase(fetchCharacter.pending, state => {
+        state.fetchStatus = 'pending';
+      })
+      .addCase(fetchCharacter.rejected, state => {
+        state.fetchStatus = 'fulfilled';
+      })
+      .addCase(fetchFavoriteCharacters.fulfilled, (state, { payload }) => {
+        const characters = payload.length ? payload : [payload];
+        const byId: Record<number, Character> = characters.reduce(
+          (byId, character) => {
+            byId[character.id] = character;
+            return byId;
+          },
+          {} as Record<number, Character>,
+        );
+        state.byIds = byId;
+        state.allIds = Object.keys(byId).map(Number);
+      })
+      .addCase(fetchFavoriteCharacters.pending, state => {
+        state.fetchStatus = 'pending';
+      })
+      .addCase(fetchFavoriteCharacters.rejected, state => {
+        state.fetchStatus = 'fulfilled';
       });
   },
 });
