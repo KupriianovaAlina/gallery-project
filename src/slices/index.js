@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { charactersReducer } from './charactersSlice';
 import { pagesReducer } from './pagesSlice';
-import {filtersReducer} from "./filtersSlice";
+import { filtersReducer } from './filtersSlice';
 
-export default configureStore({
+export const store = configureStore({
   reducer: {
     characters: charactersReducer,
     pages: pagesReducer,

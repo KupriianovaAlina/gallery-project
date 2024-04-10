@@ -1,12 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { fetchData } from './sharedThunks';
 import { Payload, filtersState } from './types';
+import { FETCH_STATUS } from '../utils/constants';
 
 const initialState: filtersState = {
   nameFilter: '',
   statusFilter: '',
   genderFilter: '',
-  fetchStatus: 'idle',
+  fetchStatus: FETCH_STATUS.Idle,
 };
 
 const filtersSlice = createSlice({
@@ -28,14 +29,14 @@ const filtersSlice = createSlice({
       .addCase(
         fetchData.fulfilled,
         (state, action: PayloadAction<Payload | undefined>) => {
-          state.fetchStatus = 'fulfilled';
+          state.fetchStatus = FETCH_STATUS.Fulfilled;
         },
       )
       .addCase(fetchData.pending, state => {
-        state.fetchStatus = 'pending';
+        state.fetchStatus = FETCH_STATUS.Pending;
       })
       .addCase(fetchData.rejected, state => {
-        state.fetchStatus = 'rejected';
+        state.fetchStatus = FETCH_STATUS.Rejected;
       });
   },
 });

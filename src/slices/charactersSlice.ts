@@ -7,13 +7,14 @@ import {
   Character,
   charactersState as State,
 } from './types';
+import { FETCH_STATUS } from '../utils/constants';
 
 const initialState: State = {
   byIds: {},
   allIds: [],
   favoriteIds: [],
   currentCharacter: {},
-  fetchStatus: 'idle',
+  fetchStatus: FETCH_STATUS.Idle,
 };
 
 const charactersSlice = createSlice({
@@ -27,7 +28,7 @@ const charactersSlice = createSlice({
         (state, { payload }: PayloadAction<Payload>) => {
           if (!payload.results) {
             state.currentCharacter = payload;
-            state.fetchStatus = 'fulfilled';
+            state.fetchStatus = FETCH_STATUS.Fulfilled;
             return;
           } else {
             const byId: Record<number, Character> = payload.results.reduce(
@@ -39,15 +40,15 @@ const charactersSlice = createSlice({
             );
             state.byIds = byId;
             state.allIds = Object.keys(byId).map(Number);
-            state.fetchStatus = 'fulfilled';
+            state.fetchStatus = FETCH_STATUS.Fulfilled;
           }
         },
       )
       .addCase(fetchData.pending, state => {
-        state.fetchStatus = 'pending';
+        state.fetchStatus = FETCH_STATUS.Pending;
       })
       .addCase(fetchData.rejected, (state, action) => {
-        state.fetchStatus = 'rejected';
+        state.fetchStatus = FETCH_STATUS.Rejected;
         state.byIds = {};
       });
   },
