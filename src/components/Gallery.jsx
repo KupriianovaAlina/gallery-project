@@ -1,28 +1,10 @@
 import CardPreview from './CardPreview';
 import { useSelector } from 'react-redux';
 import { charactersSelector } from '../slices/selectors';
-import { useEffect, useState } from 'react';
 
-const Gallery = ({ setImagesLoading }) => {
-  const [loadedImagesCount, setLoadedImagesCount] = useState(0);
+const Gallery = () => {
   const characters = useSelector(charactersSelector);
 
-  useEffect(() => {
-    if (Object.values(characters.byIds).length === 0) {
-      setImagesLoading(false);
-    }
-  }, [characters.byIds, setImagesLoading]);
-
-  const handleImageLoaded = () => {
-    setLoadedImagesCount(prevCount => {
-      const updatedCount = prevCount + 1;
-      // Если все изображения загружены, обновляем состояние в MainPage
-      if (updatedCount === Object.values(characters.byIds).length) {
-        setImagesLoading(false);
-      }
-      return updatedCount;
-    });
-  };
   if (
     Object.keys(characters.byIds).length === 0 ||
     characters.fetchStatus === 'rejected'
@@ -33,17 +15,10 @@ const Gallery = ({ setImagesLoading }) => {
       </div>
     );
   }
-
   return (
     <section className="flex flex-col lg:flex-row lg:flex-wrap gap-7 px-10 w-full justify-center items-center">
       {Object.values(characters.byIds).map(character => {
-        return (
-          <CardPreview
-            character={character}
-            key={character.id}
-            onImageLoaded={() => handleImageLoaded()}
-          />
-        );
+        return <CardPreview character={character} key={character.id} />;
       })}
     </section>
   );
