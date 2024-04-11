@@ -9,8 +9,8 @@
 1. Выполните команду git clone на своей локальной машине
 2. В терминале выполните команду npm run server, чтобы вам стала доступна опция поделиться карточкой персонажа в Telegram
 3. Запустите проект командой npm start. Дождитесь, пока страница отобразится на новой вкладке в браузере
-
-https://ziadoua.github.io/m3-Markdown-Badges/badges/TailwindCSS/tailwindcss1.svg
+   
+<img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/TailwindCSS/tailwindcss1.svg">
 https://ziadoua.github.io/m3-Markdown-Badges/badges/React/react1.svg
 https://ziadoua.github.io/m3-Markdown-Badges/badges/Redux/redux1.svg
 https://ziadoua.github.io/m3-Markdown-Badges/badges/TypeScript/typescript1.svg
