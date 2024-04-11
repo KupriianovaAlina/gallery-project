@@ -4,7 +4,7 @@ import { Info, Payload, Status, pagesState as State } from './types';
 import { FETCH_STATUS } from '../utils/constants';
 
 const initialState: State = {
-  numberOfPages: null,
+  numberOfPages: 1,
   activePage: 1,
   fetchStatus: FETCH_STATUS.Idle,
   error: null,
@@ -30,8 +30,11 @@ const pagesSlice = createSlice({
         state.fetchStatus = FETCH_STATUS.Pending;
       })
       .addCase(fetchData.rejected, (state, action) => {
-        state.error = action.error.message ?? null;
-        state.fetchStatus = FETCH_STATUS.Rejected;
+        Object.assign(state, {
+          ...initialState,
+          fetchStatus: FETCH_STATUS.Rejected,
+          error: action.error.message ?? null,
+        });
       });
   },
 });
