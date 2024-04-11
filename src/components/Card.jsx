@@ -28,7 +28,7 @@ export const Card = () => {
   return (
     <div className="flex flex-col justify-center items-center py-20 bg-gray font-system">
       <div className="relative flex w-full max-w-[48rem] flex-row rounded-xl bg-gray-light bg-clip-border text-white shadow-md relative">
-        <button className="absolute left-0 -top-14 text-white text-center text-xl font-bold border border-orange rounded-md hover:bg-orange p-2">
+        <button className="absolute block w-32 left-0 -top-14 text-white text-center text-xl font-bold border border-orange rounded-md hover:bg-orange p-2">
           <NavLink to={navigationRoutes.main()}>{'< Back'}</NavLink>
         </button>
         {storage.isAuthtoraized && <FavoriteButton id={character.id} />}
