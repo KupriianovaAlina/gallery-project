@@ -2,18 +2,22 @@ import CardPreview from './CardPreview';
 import { useSelector } from 'react-redux';
 import { charactersSelector } from '../slices/selectors';
 import { Character } from '../slices/types';
+import { FETCH_STATUS } from '../utils/constants';
 
 const Gallery = () => {
   const characters = useSelector(charactersSelector);
   console.log(characters);
 
-  if (characters.fetchStatus === 'pending') {
+  if (characters.fetchStatus === FETCH_STATUS.Pending) {
     return (
       <div className="text-center font-sans text-5xl font-semibold text-white">
         Loading...
       </div>
     );
-  } else if (!characters.allIds[0] || characters.fetchStatus === 'rejected') {
+  } else if (
+    !characters.allIds[0] ||
+    characters.fetchStatus === FETCH_STATUS.Rejected
+  ) {
     return (
       <div className="text-center font-sans text-5xl font-semibold text-white">
         No results
