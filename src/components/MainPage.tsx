@@ -8,10 +8,18 @@ import { Pagination } from './Pagination';
 import { filtersActions } from '../slices/filtersSlice';
 import { pagesActions } from '../slices/pagesSlice';
 import { useUrlQueryParams } from './hooks/useUrlQueryParams';
-import { StorageContext } from './StorageProvider';
+import { StorageContext } from '../contexts/StorageProvider';
+import { AppDispatch } from '../slices/types';
+
+interface QueryParams {
+  page?: number;
+  name?: string;
+  status?: string;
+  gender?: string;
+}
 
 const MainPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { nameFilter, statusFilter, genderFilter } =
     useSelector(filtersSelector);
   const { activePage } = useSelector(pagesSelector);
@@ -19,16 +27,7 @@ const MainPage = () => {
   const { isAuthtoraized, addSearchToHistory } = useContext(StorageContext);
 
   useEffect(() => {
-    const { page, name, status, gender } = getQueryParams();
-
-    dispatch(pagesActions.setActivePage(page || 1));
-    dispatch(filtersActions.setNameFilter(name || ''));
-    dispatch(filtersActions.setStatusFilter(status || ''));
-    dispatch(filtersActions.setGenderFilter(gender || ''));
-  }, [dispatch]);
-
-  useEffect(() => {
-    const { page, name, status, gender } = getQueryParams();
+    const { page, name, status, gender }: QueryParams = getQueryParams();
 
     dispatch(pagesActions.setActivePage(page || 1));
     dispatch(filtersActions.setNameFilter(name || ''));

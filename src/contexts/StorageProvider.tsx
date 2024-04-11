@@ -7,8 +7,8 @@ export interface StorageContextType {
   logOut: () => void;
   isAuthtoraized: boolean;
   getUserFavorite: () => any;
-  addCardToFavorite: (id: string) => void;
-  removeCardFromFavorite: (id: string) => void;
+  addCardToFavorite: (id: number) => void;
+  removeCardFromFavorite: (id: number) => void;
   getCurrentUserEmail: () => string | null;
   addSearchToHistory: (url: string) => void;
   getUserSearchHistory: () => string[];
@@ -31,10 +31,10 @@ export const StorageContext = createContext<StorageContextType>({
   getUserFavorite: function () {
     throw new Error('Function not implemented.');
   },
-  addCardToFavorite: function (id: string): void {
+  addCardToFavorite: function (id: number): void {
     throw new Error('Function not implemented.');
   },
-  removeCardFromFavorite: function (id: string): void {
+  removeCardFromFavorite: function (id: number): void {
     throw new Error('Function not implemented.');
   },
   getCurrentUserEmail: function (): string | null {
@@ -75,7 +75,7 @@ const StorageProvider: React.FC<Props> = ({ children }) => {
     Boolean(getCurrentUserEmail()),
   );
 
-  const addCardToFavorite = (id: string): void => {
+  const addCardToFavorite = (id: number): void => {
     const users = getUsers();
     const currentUser = getCurrentUser();
     currentUser.favoriteIds.push(id);
@@ -85,11 +85,11 @@ const StorageProvider: React.FC<Props> = ({ children }) => {
     setUsers(updatedUsers);
   };
 
-  const removeCardFromFavorite = (id: string): void => {
+  const removeCardFromFavorite = (id: number): void => {
     const users = getUsers();
     const currentUser = getCurrentUser();
     const updatedFavoriteIds = currentUser.favoriteIds.filter(
-      (favoriteId: string) => favoriteId !== id,
+      (favoriteId: number) => favoriteId !== id,
     );
     currentUser.favoriteIds = updatedFavoriteIds;
     const updatedUsers = users.map((user: any) =>

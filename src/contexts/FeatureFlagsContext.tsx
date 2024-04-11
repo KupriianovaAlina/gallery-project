@@ -7,7 +7,9 @@ interface FeatureFlags {
 
 const FeatureFlagsContext = createContext<FeatureFlags | null>(null);
 
-export const FeatureFlagsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const FeatureFlagsProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [featureFlags, setFeatureFlags] = useState<FeatureFlags>({});
 
   useEffect(() => {

@@ -11,7 +11,7 @@ const url = ({
   ids,
 }: FetchDataParams): string => {
   if (id) return `${API_URL_ROOT}/${id}`;
-  if (ids) return `${API_URL_ROOT}/${ids.join(",")}`;
+  if (ids) return `${API_URL_ROOT}/${ids.join(',')}`;
 
   const params = new URLSearchParams(`page=${pageNumber}`);
 
@@ -23,87 +23,79 @@ const url = ({
 };
 
 export const fetchData = createAsyncThunk<
-  any, // Тип данных, который возвращается из выполненного promise
-  FetchDataParams, // Первый параметр для payloadCreator
+  any,
+  FetchDataParams,
   {
-    rejectValue: string // Тип ошибки
+    rejectValue: string;
   }
->
-(
-  'fetchData',
-  async (params: FetchDataParams, { rejectWithValue }) => {
-    try {
-      const response = await fetch(url(params));
-      const data = await response.json();
+>('fetchData', async (params: FetchDataParams, { rejectWithValue }) => {
+  try {
+    const response = await fetch(url(params));
+    const data = await response.json();
 
-  if (!response.ok || data.error) {
-    const errorMessage = data.error?.message || 'Ошибка при выполнении запроса';
-    if (errorMessage === 'There is nothing here') {
-      return rejectWithValue('Нет результатов');
+    if (!response.ok || data.error) {
+      const errorMessage =
+        data.error?.message || 'Ошибка при выполнении запроса';
+      if (errorMessage === 'There is nothing here') {
+        return rejectWithValue('Нет результатов');
+      }
+      return rejectWithValue(errorMessage);
     }
-    return rejectWithValue(errorMessage);
+    return data;
+  } catch (error: any) {
+    console.error('Произошла ошибка:', error.message);
+    return rejectWithValue(error.toString());
   }
-  return data;
-} catch (error: any) {
-  console.error('Произошла ошибка:', error.message);
-  return rejectWithValue(error.toString());
-}
-  },
-);
+});
 
 export const fetchCharacter = createAsyncThunk<
-  any, // Тип данных, который возвращается из выполненного promise
-  number, // Первый параметр для payloadCreator
+  any,
+  number,
   {
-    rejectValue: string // Тип ошибки
+    rejectValue: string;
   }
->
-(
-  'fetchCharacter',
-  async (id: number, { rejectWithValue }) => {
-    try {
-      const response = await fetch(url({ id }));
-      const data = await response.json();
+>('fetchCharacter', async (id: number, { rejectWithValue }) => {
+  try {
+    const response = await fetch(url({ id }));
+    const data = await response.json();
 
-  if (!response.ok || data.error) {
-        const errorMessage = data.error?.message || 'Ошибка при выполнении запроса';
-        if (errorMessage === 'There is nothing here') {
-          return rejectWithValue('Нет результатов');
-        }
-        return rejectWithValue(errorMessage);
+    if (!response.ok || data.error) {
+      const errorMessage =
+        data.error?.message || 'Ошибка при выполнении запроса';
+      if (errorMessage === 'There is nothing here') {
+        return rejectWithValue('Нет результатов');
       }
-      return data;
-    } catch (error: any) {
-      console.error('Произошла ошибка:', error.message);
-      return rejectWithValue(error.toString());
+      return rejectWithValue(errorMessage);
     }
-  },
-);
+    return data;
+  } catch (error: any) {
+    console.error('Произошла ошибка:', error.message);
+    return rejectWithValue(error.toString());
+  }
+});
 
 export const fetchFavoriteCharacters = createAsyncThunk<
-  any, // Тип данных, который возвращается из выполненного promise
-  number[], // Первый параметр для payloadCreator
+  any,
+  number[],
   {
-    rejectValue: string // Тип ошибки
+    rejectValue: string;
   }
->(
-  'fetchFavoriteCharacters',
-  async (ids: number[], { rejectWithValue }) => {
-    try {
-      const response = await fetch(url({ ids }));
-      const data = await response.json();
+>('fetchFavoriteCharacters', async (ids: number[], { rejectWithValue }) => {
+  try {
+    const response = await fetch(url({ ids }));
+    const data = await response.json();
 
-      if (!response.ok || data.error) {
-        const errorMessage = data.error?.message || 'Ошибка при выполнении запроса';
-        if (errorMessage === 'There is nothing here') {
-          return rejectWithValue('Нет результатов');
-        }
-        return rejectWithValue(errorMessage);
+    if (!response.ok || data.error) {
+      const errorMessage =
+        data.error?.message || 'Ошибка при выполнении запроса';
+      if (errorMessage === 'There is nothing here') {
+        return rejectWithValue('Нет результатов');
       }
-      return data;
-    } catch (error: any) {
-      console.error('Произошла ошибка:', error.message);
-      return rejectWithValue(error.toString());
+      return rejectWithValue(errorMessage);
     }
-  },
-);
+    return data;
+  } catch (error: any) {
+    console.error('Произошла ошибка:', error.message);
+    return rejectWithValue(error.toString());
+  }
+});

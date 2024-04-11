@@ -2,12 +2,12 @@ import { navigationRoutes } from '../routes';
 import { Profile } from './Profile';
 import { AuthButtons } from './AuthButtons';
 import { NavigationLinks } from './NavigationLinks';
-import { StorageContext } from './StorageProvider';
+import { StorageContext } from '../contexts/StorageProvider';
 import { useContext } from 'react';
 
 export const Header = () => {
   const storage = useContext(StorageContext);
-  const url = location.href.split('/').at(-1);
+  const url = location.href.split('/').at(-1) || '';
 
   return (
     <div className="bg-white pb-10 font-system pt-3 px-8">

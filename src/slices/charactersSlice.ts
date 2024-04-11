@@ -39,20 +39,24 @@ const charactersSlice = createSlice({
         state.fetchStatus = FETCH_STATUS.Pending;
       })
       .addCase(fetchData.rejected, (state, action) => {
-        state.fetchStatus = FETCH_STATUS.Rejected;
+        Object.assign(state, {
+          ...initialState,
+          fetchStatus: FETCH_STATUS.Rejected,
+          error: action.error.message ?? null,
+        });
       })
       .addCase(
         fetchCharacter.fulfilled,
-        (state, { payload }: PayloadAction<Payload>) => {
+        (state, { payload }: PayloadAction<Character>) => {
           state.currentCharacter = payload;
-          state.fetchStatus = 'fulfilled';
+          state.fetchStatus = FETCH_STATUS.Fulfilled;
         },
       )
       .addCase(fetchCharacter.pending, state => {
-        state.fetchStatus = 'pending';
+        state.fetchStatus = FETCH_STATUS.Pending;
       })
       .addCase(fetchCharacter.rejected, state => {
-        state.fetchStatus = 'fulfilled';
+        state.fetchStatus = FETCH_STATUS.Rejected;
       })
       .addCase(fetchFavoriteCharacters.fulfilled, (state, { payload }) => {
         const characters = payload.length ? payload : [payload];
@@ -65,12 +69,13 @@ const charactersSlice = createSlice({
         );
         state.byIds = byId;
         state.allIds = Object.keys(byId).map(Number);
+        state.fetchStatus = FETCH_STATUS.Fulfilled;
       })
       .addCase(fetchFavoriteCharacters.pending, state => {
-        state.fetchStatus = 'pending';
+        state.fetchStatus = FETCH_STATUS.Pending;
       })
       .addCase(fetchFavoriteCharacters.rejected, state => {
-        state.fetchStatus = 'fulfilled';
+        state.fetchStatus = FETCH_STATUS.Rejected;
       });
   },
 });

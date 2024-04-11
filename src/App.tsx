@@ -1,9 +1,9 @@
 import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { navigationRoutes } from './routes';
-import StorageProvider from './components/StorageProvider';
+import StorageProvider from './contexts/StorageProvider';
 
-const MainPage = lazy(() => import('./components/MainPage.jsx'));
+const MainPage = lazy(() => import('./components/MainPage'));
 const Header = lazy(() =>
   import('./components/Header').then(module => ({
     default: module.Header,

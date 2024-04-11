@@ -1,12 +1,11 @@
-import { ERROR_MESSAGES, INITIAL_FORM_DATA } from "../SignUpPage/constants";
-import { navigationRoutes } from "../../routes";
-import React, { useCallback, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { isCorrectPassword } from "./utils/isCorrectPassword";
-import { isExistEmail } from "./utils/isExistEmail";
-import { Input } from "../shared/Input";
-import { StorageContext } from "../StorageProvider";
-
+import { ERROR_MESSAGES, INITIAL_FORM_DATA } from '../SignUpPage/constants';
+import { navigationRoutes } from '../../routes';
+import React, { useCallback, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { isCorrectPassword } from './utils/isCorrectPassword';
+import { isExistEmail } from './utils/isExistEmail';
+import { Input } from '../shared/Input';
+import { StorageContext } from '../../contexts/StorageProvider';
 
 export const SignInPage = () => {
   const navigate = useNavigate();
@@ -19,33 +18,36 @@ export const SignInPage = () => {
 
   // Function to handle changes in form inputs and update state accordingly
   const handleChange = useCallback((e: any) => {
-    const { name, value } = (e.target as HTMLInputElement);
+    const { name, value } = e.target as HTMLInputElement;
     setFormData(prevState => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   }, []);
 
   // Function to validate form data and handle form submission
-  const handleSubmit = useCallback((e: any) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    (e: any) => {
+      e.preventDefault();
 
-    if (formData.email === '' || formData.password === '') {
-      setError(ERROR_MESSAGES.requiredField);
-    } else {
-      const user = isExistEmail(formData.email);
-      if (!user) {
-        setError(ERROR_MESSAGES.incorrectEmail);
-      } else if (!isCorrectPassword(user, formData.password)) {
-        setError(ERROR_MESSAGES.incorrectPassword);
+      if (formData.email === '' || formData.password === '') {
+        setError(ERROR_MESSAGES.requiredField);
       } else {
-        storage.logIn(formData.email);
-        setFormData(INITIAL_FORM_DATA);
-        setError('');
-        navigate(navigationRoutes.main());
+        const user = isExistEmail(formData.email);
+        if (!user) {
+          setError(ERROR_MESSAGES.incorrectEmail);
+        } else if (!isCorrectPassword(user, formData.password)) {
+          setError(ERROR_MESSAGES.incorrectPassword);
+        } else {
+          storage.logIn(formData.email);
+          setFormData(INITIAL_FORM_DATA);
+          setError('');
+          navigate(navigationRoutes.main());
+        }
       }
-    }
-  }, [formData]);
+    },
+    [formData],
+  );
 
   // Function to toggle the visibility of the password field
   const togglePasswordVisibility = () => {
@@ -74,7 +76,10 @@ export const SignInPage = () => {
 
           <div>
             <div className="flex items-center justify-between">
-              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Password&nbsp;<span className="text-red-500">*</span>
               </label>
               <div className="text-sm">
@@ -109,8 +114,11 @@ export const SignInPage = () => {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Not a member?
-          <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 ml-3"
-            onClick={() => navigate(navigationRoutes.signup())}>
+          <a
+            href="#"
+            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 ml-3"
+            onClick={() => navigate(navigationRoutes.signup())}
+          >
             Sign Up
           </a>
         </p>

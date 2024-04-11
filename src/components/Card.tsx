@@ -8,14 +8,15 @@ import { fetchCharacter } from '../slices/sharedThunks';
 import { NavLink } from 'react-router-dom';
 import { useFeatureFlags } from '../contexts/FeatureFlagsContext';
 import ShareButton from './ShareButton';
-import { StorageContext } from './StorageProvider';
+import { AppDispatch } from '../slices/types';
+import { StorageContext } from '../contexts/StorageProvider';
 
 export const Card = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const params = useParams();
   const storage = useContext(StorageContext);
 
-  const id = params.id?.slice(1);
+  const id = Number(params.id);
   const characters = useSelector(charactersSelector);
   const character = characters.currentCharacter;
 
@@ -28,7 +29,7 @@ export const Card = () => {
   return (
     <div className="flex flex-col justify-center items-center py-20 bg-gray font-system">
       <div className="relative flex w-full max-w-[48rem] flex-row rounded-xl bg-gray-light bg-clip-border text-white shadow-md relative">
-        <button className="absolute left-0 -top-14 text-white text-center text-xl font-bold border border-orange rounded-md hover:bg-orange p-2">
+        <button className="absolute block w-32 left-0 -top-14 text-white text-center text-xl font-bold border border-orange rounded-md hover:bg-orange p-2">
           <NavLink to={navigationRoutes.main()}>{'< Back'}</NavLink>
         </button>
         {storage.isAuthtoraized && <FavoriteButton id={character.id} />}
@@ -65,10 +66,13 @@ export const Card = () => {
           </p>
           <p>
             <strong className="text-gray-superLight">Episodes: </strong>
-            {character.episode?.reduce((acc, episode) => {
-              if (acc === '') return episode.match(/\d+/)[0];
-              return `${acc}, ${episode.match(/\d+/)[0]}`;
-            }, '')}
+            {character.episode?.reduce(
+              (acc: string, episode: string | null) => {
+                if (acc === '') return episode?.match(/\d+/)?.[0] || '';
+                return `${acc}, ${episode?.match(/\d+/)?.[0] || ''}`;
+              },
+              '',
+            )}
           </p>
           {isTelegramShareEnabled && (
             <ShareButton text={`Learn about ${character.name}`} />

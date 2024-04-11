@@ -52,7 +52,7 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({
       dispatch(filterAction);
       updateQueryParams({ [id]: selectedOption });
     }
-  }, [selectedOption, id, dispatch, updateQueryParams]);
+  }, [selectedOption, id, dispatch]);
 
   useEffect(() => {
     setSelectedOption(filter[`${id}Filter`] || '');

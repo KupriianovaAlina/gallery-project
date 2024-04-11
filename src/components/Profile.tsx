@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { StorageContext } from './StorageProvider';
+import { StorageContext } from '../contexts/StorageProvider';
 import { Button } from './Button';
 import { FaUser } from 'react-icons/fa';
 

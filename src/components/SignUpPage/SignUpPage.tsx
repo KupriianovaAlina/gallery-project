@@ -1,10 +1,19 @@
-import React, { SyntheticEvent, useCallback, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { isValidPassword } from "./utils/isValidPassword";
-import { isValidName } from "./utils/isValidName";
-import { ERROR_MESSAGES, INITIAL_FORM_DATA, NAVIGATION_PATH_MAIN_PAGE } from "./constants";
-import { Input } from "../shared/Input";
-import { StorageContext } from "../StorageProvider";
+import React, {
+  SyntheticEvent,
+  useCallback,
+  useState,
+  useContext,
+} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { isValidPassword } from './utils/isValidPassword';
+import { isValidName } from './utils/isValidName';
+import {
+  ERROR_MESSAGES,
+  INITIAL_FORM_DATA,
+  NAVIGATION_PATH_MAIN_PAGE,
+} from './constants';
+import { Input } from '../shared/Input';
+import { StorageContext } from '../../contexts/StorageProvider';
 
 export const SignUpPage = () => {
   const navigate = useNavigate();
@@ -17,40 +26,49 @@ export const SignUpPage = () => {
 
   // Function to handle changes in form inputs and update state accordingly
   const handleChange = useCallback((e: SyntheticEvent) => {
-    const { name, value } = (e.target as HTMLInputElement);
+    const { name, value } = e.target as HTMLInputElement;
     setFormData(prevState => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   }, []);
 
   // Function to validate form data and handle form submission
-  const handleSubmit = useCallback((e: SyntheticEvent) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    (e: SyntheticEvent) => {
+      e.preventDefault();
 
-    if (formData.email === '' || formData.password === '' || formData.firstName === '') {
-      setError(ERROR_MESSAGES.requiredField);
-    } else if (!isValidPassword(formData.password)) {
-      setError(ERROR_MESSAGES.invalidPassword);
-    } else if (!isValidName(formData.firstName)) {
-      setError(ERROR_MESSAGES.invalidFirstName);
-    } else if (formData.lastName !== '' && !isValidName(formData.lastName)) {
-      setError(ERROR_MESSAGES.invalidLastName);
-    } else {
-      const users = storage.getUsers() ?? [];
-      const existingUser = users.find((user: any) => user.email === formData.email);
-      if (existingUser) {
-        setError(ERROR_MESSAGES.userExists);
+      if (
+        formData.email === '' ||
+        formData.password === '' ||
+        formData.firstName === ''
+      ) {
+        setError(ERROR_MESSAGES.requiredField);
+      } else if (!isValidPassword(formData.password)) {
+        setError(ERROR_MESSAGES.invalidPassword);
+      } else if (!isValidName(formData.firstName)) {
+        setError(ERROR_MESSAGES.invalidFirstName);
+      } else if (formData.lastName !== '' && !isValidName(formData.lastName)) {
+        setError(ERROR_MESSAGES.invalidLastName);
       } else {
-        users.push(Object.assign(formData, { favoriteIds: [], history: [] }));
-        storage.setUsers(users)
-        storage.logIn(formData.email);
-        setFormData(INITIAL_FORM_DATA);
-        setError('');
-        navigate(NAVIGATION_PATH_MAIN_PAGE);
+        const users = storage.getUsers() ?? [];
+        const existingUser = users.find(
+          (user: any) => user.email === formData.email,
+        );
+        if (existingUser) {
+          setError(ERROR_MESSAGES.userExists);
+        } else {
+          users.push(Object.assign(formData, { favoriteIds: [], history: [] }));
+          storage.setUsers(users);
+          storage.logIn(formData.email);
+          setFormData(INITIAL_FORM_DATA);
+          setError('');
+          navigate(NAVIGATION_PATH_MAIN_PAGE);
+        }
       }
-    }
-  }, [formData]);
+    },
+    [formData],
+  );
 
   // Function to toggle the visibility of the password field
   const togglePasswordVisibility = () => {
@@ -98,7 +116,10 @@ export const SignUpPage = () => {
 
           <div>
             <div className="flex items-center justify-between">
-              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Password&nbsp;<span className="text-red-500">*</span>
               </label>
               <div className="text-sm">

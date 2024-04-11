@@ -1,13 +1,21 @@
 import cn from 'classnames';
-import { useState, useContext } from 'react';
-import { StorageContext } from './StorageProvider';
+import { useState, useContext, useEffect } from 'react';
+import { StorageContext } from '../contexts/StorageProvider';
 
-const FavoriteButton = ({ id }) => {
+interface FavoriteButtonProps {
+  id: number;
+}
+
+const FavoriteButton: React.FC<FavoriteButtonProps> = ({ id }) => {
   const storage = useContext(StorageContext);
 
   const [isFavorite, setIsFavorite] = useState(
     storage.getUserFavorite().includes(id),
   );
+
+  useEffect(() => {
+    setIsFavorite(storage.getUserFavorite().includes(id));
+  }, [id]);
 
   const toggleFavorite = () => {
     if (isFavorite) {

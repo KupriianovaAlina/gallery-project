@@ -1,5 +1,5 @@
 export type FilterSelectProps = {
   options: string[];
-  id: string;
+  id: 'status' | 'gender';
   label: string;
 };
