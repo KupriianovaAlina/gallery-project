@@ -7,6 +7,7 @@ import { AppDispatch } from '../slices/types';
 import { charactersSelector } from '../slices/selectors';
 
 export const Favorites = () => {
+  const characters = useSelector(charactersSelector);
   const dispatch = useDispatch<AppDispatch>();
   const storage = useContext(StorageContext);
   const favorites = storage.getUserFavorite();
@@ -16,7 +17,7 @@ export const Favorites = () => {
   }, [dispatch]);
 
   return (
-    <div className="flex flex-col justify-center items-center py-10 bg-gray">
+    <div className="flex flex-col justify-center items-center py-10 bg-gray grow">
       <section>
         <h2 className="font-black font-system text-white text-6xl mb-10">
           {"Favorite characters' gallery"}
