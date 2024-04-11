@@ -6,7 +6,6 @@ import { FETCH_STATUS } from '../utils/constants';
 
 const Gallery = () => {
   const characters = useSelector(charactersSelector);
-  console.log(characters);
 
   if (characters.fetchStatus === FETCH_STATUS.Pending) {
     return (
