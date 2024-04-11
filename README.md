@@ -11,8 +11,4 @@
 3. Запустите проект командой npm start. Дождитесь, пока страница отобразится на новой вкладке в браузере
 
 ## Используемые технологии:
-<img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/TailwindCSS/tailwindcss1.svg">
-<img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/React/react1.svg">
-<img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/Redux/redux1.svg">
-<img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/TypeScript/typescript1.svg">
-<img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/Axios/axios1.svg">
+<img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/TailwindCSS/tailwindcss1.svg"> <img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/React/react1.svg"> <img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/Redux/redux1.svg"> <img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/TypeScript/typescript1.svg"> <img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/Axios/axios1.svg">
