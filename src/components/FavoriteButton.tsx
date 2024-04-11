@@ -1,8 +1,12 @@
 import cn from 'classnames';
 import { useState, useContext, useEffect } from 'react';
-import { StorageContext } from './StorageProvider';
+import { StorageContext } from '../contexts/StorageProvider';
 
-const FavoriteButton = ({ id }) => {
+interface FavoriteButtonProps {
+  id: number;
+}
+
+const FavoriteButton: React.FC<FavoriteButtonProps> = ({ id }) => {
   const storage = useContext(StorageContext);
 
   const [isFavorite, setIsFavorite] = useState(

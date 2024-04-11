@@ -10,27 +10,27 @@ export type pagesState = {
 export type charactersState = {
   byIds: Record<number, Character>;
   allIds: number[];
-  currentCharacter: Character | {};
+  currentCharacter: Character | Record<string, never>;
   fetchStatus: Status;
 };
 
 export type Character = {
+  id: number;
+  name: string;
+  status: string;
   created: string;
   episode: string[];
   gender: string;
-  id: number;
   image: string;
   location: {
     name: string;
     url: string;
   };
-  name: string;
   origin: {
     name: string;
     url: string;
   };
   species: string;
-  status: string;
   type: string;
   url: string;
 };

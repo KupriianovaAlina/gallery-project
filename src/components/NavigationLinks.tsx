@@ -1,6 +1,10 @@
 import { navigationRoutes } from '../routes';
 
-export const NavigationLinks = ({ url }) => (
+type Props = {
+  url: string;
+};
+
+export const NavigationLinks: React.FC<Props> = ({ url }) => (
   <ul className="text-center flex items-center font-bold text-gray md:gap-10 gap-3 text-base md:text-xl">
     <li
       className={`hover:text-orange ${url === '' ? 'text-orange' : 'text-gray'}`}

@@ -8,19 +8,20 @@ import { fetchCharacter } from '../slices/sharedThunks';
 import { NavLink } from 'react-router-dom';
 import { useFeatureFlags } from '../contexts/FeatureFlagsContext';
 import ShareButton from './ShareButton';
-import { StorageContext } from './StorageProvider';
+import { AppDispatch } from '../slices/types';
+import { StorageContext } from '../contexts/StorageProvider';
 import { FETCH_STATUS } from '../utils/constants';
 
 export const Card = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const params = useParams();
   const storage = useContext(StorageContext);
 
-  const id = params.id.slice(1);
+  const id = Number(params.id);
   const characters = useSelector(charactersSelector);
   const character = characters.currentCharacter;
 
-  const { isTelegramShareEnabled } = useFeatureFlags();
+  const { isTelegramShareEnabled } = useFeatureFlags() || {};
 
   useEffect(() => {
     dispatch(fetchCharacter(id));
@@ -71,9 +72,9 @@ export const Card = () => {
         </p>
         <p>
           <strong className="text-gray-superLight">Episodes: </strong>
-          {character.episode?.reduce((acc, episode) => {
-            if (acc === '') return episode.match(/\d+/)[0];
-            return `${acc}, ${episode.match(/\d+/)[0]}`;
+          {character.episode?.reduce((acc: string, episode: string | null) => {
+            if (acc === '') return episode?.match(/\d+/)?.[0] || '';
+            return `${acc}, ${episode?.match(/\d+/)?.[0] || ''}`;
           }, '')}
         </p>
         {isTelegramShareEnabled && (

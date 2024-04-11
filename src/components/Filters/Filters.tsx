@@ -2,8 +2,14 @@ import FilterSearch from './FilterSearch';
 import { genders, statuses } from './constants';
 import { FilterSelect } from './FilterSelect';
 
-const Filters = () => {
-  const filterConfigs = [
+type FilterConfig = {
+  options: string[];
+  id: 'status' | 'gender';
+  label: string;
+};
+
+const Filters: React.FC = () => {
+  const filterConfigs: FilterConfig[] = [
     {
       options: statuses,
       id: 'status',

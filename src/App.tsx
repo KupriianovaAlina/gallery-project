@@ -1,11 +1,11 @@
 import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { navigationRoutes } from './routes.js';
-import StorageProvider from './components/StorageProvider.jsx';
+import { navigationRoutes } from './routes';
+import StorageProvider from './contexts/StorageProvider';
 
-const MainPage = lazy(() => import('./components/MainPage.jsx'));
+const MainPage = lazy(() => import('./components/MainPage'));
 const Header = lazy(() =>
-  import('./components/Header.jsx').then(module => ({
+  import('./components/Header').then(module => ({
     default: module.Header,
   })),
 );
@@ -20,22 +20,22 @@ const SignUpPage = lazy(() =>
   })),
 );
 const NotFound = lazy(() =>
-  import('./components/NotFound.jsx').then(module => ({
+  import('./components/NotFound').then(module => ({
     default: module.NotFound,
   })),
 );
 const Favorites = lazy(() =>
-  import('./components/FavoritesPage.jsx').then(module => ({
+  import('./components/FavoritesPage').then(module => ({
     default: module.Favorites,
   })),
 );
 const History = lazy(() =>
-  import('./components/HistoryPage.jsx').then(module => ({
+  import('./components/HistoryPage').then(module => ({
     default: module.History,
   })),
 );
 const Card = lazy(() =>
-  import('./components/Card.jsx').then(module => ({
+  import('./components/Card').then(module => ({
     default: module.Card,
   })),
 );

@@ -24,9 +24,9 @@ const charactersSlice = createSlice({
         fetchData.fulfilled,
         (state, { payload }: PayloadAction<Payload>) => {
           const byId: Record<number, Character> = payload.results.reduce(
-            (byId: Record<number, Character>, character: Character) => {
-              byId[character.id] = character;
-              return byId;
+            (accumulator: Record<number, Character>, character: Character) => {
+              accumulator[character.id] = character;
+              return accumulator;
             },
             {} as Record<number, Character>,
           );
@@ -47,7 +47,7 @@ const charactersSlice = createSlice({
       })
       .addCase(
         fetchCharacter.fulfilled,
-        (state, { payload }: PayloadAction<Payload>) => {
+        (state, { payload }: PayloadAction<Character>) => {
           state.currentCharacter = payload;
           state.fetchStatus = FETCH_STATUS.Fulfilled;
         },
@@ -61,14 +61,15 @@ const charactersSlice = createSlice({
       .addCase(fetchFavoriteCharacters.fulfilled, (state, { payload }) => {
         const characters = payload.length ? payload : [payload];
         const byId: Record<number, Character> = characters.reduce(
-          (byId: Record<number, Character>, character: Character) => {
-            byId[character.id] = character;
-            return byId;
+          (accumulator: Record<number, Character>, character: Character) => {
+            accumulator[character.id] = character;
+            return accumulator;
           },
           {} as Record<number, Character>,
         );
         state.byIds = byId;
         state.allIds = Object.keys(byId).map(Number);
+        state.fetchStatus = FETCH_STATUS.Fulfilled;
       })
       .addCase(fetchFavoriteCharacters.pending, state => {
         state.fetchStatus = FETCH_STATUS.Pending;

@@ -1,16 +1,22 @@
 import { Link } from 'react-router-dom';
 import { navigationRoutes } from '../routes';
 import FavoriteButton from './FavoriteButton';
-import { StorageContext } from './StorageProvider';
+import { StorageContext } from '../contexts/StorageProvider';
 import { useContext } from 'react';
+import { Character } from '../slices/types';
+import { StorageContextType } from '../contexts/StorageProvider';
 
-const CardPreview = ({ character }) => {
-  const storage = useContext(StorageContext);
+interface CardPreviewProps {
+  character: Character;
+}
+
+const CardPreview: React.FC<CardPreviewProps> = ({ character }) => {
+  const storage = useContext<StorageContextType>(StorageContext);
 
   return (
     <div className="relative w-9/12 lg:w-2/5 bg-gray-light rounded-lg">
       {storage.isAuthtoraized && <FavoriteButton id={character.id} />}
-      <Link to={navigationRoutes.card(character.id)}>
+      <Link to={navigationRoutes.card(`${character.id}`)}>
         <div className="flex h-full" key={character.id}>
           <img
             alt="gallery"

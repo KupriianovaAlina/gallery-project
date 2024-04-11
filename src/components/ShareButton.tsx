@@ -1,6 +1,10 @@
 import { FaTelegramPlane } from 'react-icons/fa';
 
-const ShareButton = ({ text }) => {
+type Props = {
+  text: string;
+};
+
+const ShareButton: React.FC<Props> = ({ text }) => {
   const shareInTelegram = () => {
     const pageUrl = encodeURIComponent(window.location.href);
     const telegramUrl = `https://t.me/share/url?url=${pageUrl}&text=${text}`;

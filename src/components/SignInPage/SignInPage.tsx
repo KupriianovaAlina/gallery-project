@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { isCorrectPassword } from './utils/isCorrectPassword';
 import { isExistEmail } from './utils/isExistEmail';
 import { Input } from '../shared/Input';
-import { StorageContext } from '../StorageProvider';
+import { StorageContext } from '../../contexts/StorageProvider';
 
 export const SignInPage = () => {
   const navigate = useNavigate();

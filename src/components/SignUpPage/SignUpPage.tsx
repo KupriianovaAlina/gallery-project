@@ -13,7 +13,7 @@ import {
   NAVIGATION_PATH_MAIN_PAGE,
 } from './constants';
 import { Input } from '../shared/Input';
-import { StorageContext } from '../StorageProvider';
+import { StorageContext } from '../../contexts/StorageProvider';
 
 export const SignUpPage = () => {
   const navigate = useNavigate();

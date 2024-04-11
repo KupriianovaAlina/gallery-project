@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { StorageContext } from './StorageProvider';
+import { StorageContext } from '../contexts/StorageProvider';
 import { FaLink } from 'react-icons/fa';
 
 export const History = () => {

@@ -1,20 +1,19 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { charactersSelector } from '../slices/selectors';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useContext } from 'react';
-import { StorageContext } from './StorageProvider';
+import { StorageContext } from '../contexts/StorageProvider';
 import { fetchFavoriteCharacters } from '../slices/sharedThunks';
 import Gallery from './Gallery';
+import { AppDispatch } from '../slices/types';
+import { charactersSelector } from '../slices/selectors';
 
 export const Favorites = () => {
-  const characters = useSelector(charactersSelector);
-  const dispatch = useDispatch();
-
+  const dispatch = useDispatch<AppDispatch>();
   const storage = useContext(StorageContext);
   const favorites = storage.getUserFavorite();
 
   useEffect(() => {
     dispatch(fetchFavoriteCharacters(favorites));
-  }, [dispatch, favorites]);
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col justify-center items-center py-10 bg-gray">
@@ -23,7 +22,7 @@ export const Favorites = () => {
           {"Favorite characters' gallery"}
         </h2>
       </section>
-      <Gallery characters={characters} />
+      <Gallery />
     </div>
   );
 };
