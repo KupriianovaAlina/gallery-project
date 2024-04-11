@@ -14,7 +14,7 @@ const ShareButton: React.FC<Props> = ({ text }) => {
   return (
     <button
       onClick={shareInTelegram}
-      className="flex items-center justify-center px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
+      className="flex items-center justify-center mt-4 px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
     >
       <FaTelegramPlane className="w-4 h-4 mr-2" />
     </button>
