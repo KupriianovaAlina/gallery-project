@@ -17,7 +17,12 @@ const initialState: State = {
 const charactersSlice = createSlice({
   name: 'characters',
   initialState,
-  reducers: {},
+  reducers: {
+    removeCharacter: (state, { payload }) => {
+      state.allIds = state.allIds.filter(elm => elm !== payload);
+      delete state.byIds[payload];
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(

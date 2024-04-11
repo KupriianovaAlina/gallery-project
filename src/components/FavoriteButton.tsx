@@ -1,6 +1,10 @@
 import cn from 'classnames';
 import { useState, useContext, useEffect } from 'react';
 import { StorageContext } from '../contexts/StorageProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import { charactersSelector } from '../slices/selectors';
+import { AppDispatch } from '../slices/types';
+import { charactersActions } from '../slices/charactersSlice';
 
 interface FavoriteButtonProps {
   id: number;
@@ -8,6 +12,8 @@ interface FavoriteButtonProps {
 
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({ id }) => {
   const storage = useContext(StorageContext);
+  const characters = useSelector(charactersSelector);
+  const dispatch = useDispatch<AppDispatch>();
 
   const [isFavorite, setIsFavorite] = useState(
     storage.getUserFavorite().includes(id),
@@ -21,6 +27,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ id }) => {
     if (isFavorite) {
       setIsFavorite(false);
       storage.removeCardFromFavorite(id);
+      dispatch(charactersActions.removeCharacter(id));
       return;
     }
     setIsFavorite(true);
