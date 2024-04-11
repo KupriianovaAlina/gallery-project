@@ -11,7 +11,7 @@ const url = ({
   ids,
 }: FetchDataParams): string => {
   if (id) return `${API_URL_ROOT}/${id}`;
-  if (ids) return `${API_URL_ROOT}/${ids.join(",")}`;
+  if (ids) return `${API_URL_ROOT}/${ids.join(',')}`;
 
   const params = new URLSearchParams(`page=${pageNumber}`);
 

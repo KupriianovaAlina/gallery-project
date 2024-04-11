@@ -4,13 +4,15 @@
 
 @font-face {
   font-family: 'SchwiftyFont';
-  src: local('SchwiftyFont'),
+  src:
+    local('SchwiftyFont'),
     url(./fonts/get_schwifty.woff) format('woff');
 }
 
 @font-face {
   font-family: 'AcmeFont';
-  src: local('AcmeFont'),
+  src:
+    local('AcmeFont'),
     url(./fonts/Acme-Regular.woff) format('woff');
 }
 

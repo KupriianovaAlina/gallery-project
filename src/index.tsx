@@ -16,5 +16,5 @@ root.render(
         <App />
       </Provider>
     </FeatureFlagsProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
