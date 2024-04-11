@@ -28,15 +28,6 @@ const MainPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const { page, name, status, gender } = getQueryParams();
-
-    dispatch(pagesActions.setActivePage(page || 1));
-    dispatch(filtersActions.setNameFilter(name || ''));
-    dispatch(filtersActions.setStatusFilter(status || ''));
-    dispatch(filtersActions.setGenderFilter(gender || ''));
-  }, [dispatch]);
-
-  useEffect(() => {
     const params = {
       pageNumber: activePage,
       name: nameFilter,

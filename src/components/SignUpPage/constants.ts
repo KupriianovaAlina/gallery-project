@@ -5,9 +5,9 @@ export const INITIAL_FORM_DATA: FormData = {
   email: '',
   password: '',
 };
-export const PASSWORD_REGEX: RegExp =
-  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{5,25}$/;
-export const NAME_REGEX: RegExp = /^[A-Za-z]{3,25}$/;
+export const PASSWORD_REGEX =
+  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{5,25}$/;
+export const NAME_REGEX = /^[A-Za-z]{3,25}$/;
 
 export const ERROR_MESSAGES: ErrorMessages = {
   requiredField: 'Please fill in all fields',
