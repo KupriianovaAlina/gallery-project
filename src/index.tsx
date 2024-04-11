@@ -4,7 +4,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { store } from './slices/index';
 import './index.css';
-import { FeatureFlagsProvider } from './contexts/FeatureFlagsContext';
+import { FeatureFlagsProvider } from './contexts/FeatureFlagsProvider';
 import ErrorBoundary from './components/ErrorBoundary';
 
 const root = ReactDOM.createRoot(

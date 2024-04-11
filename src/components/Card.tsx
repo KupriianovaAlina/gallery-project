@@ -6,7 +6,7 @@ import FavoriteButton from './FavoriteButton';
 import { navigationRoutes } from '../routes';
 import { fetchCharacter } from '../slices/sharedThunks';
 import { NavLink } from 'react-router-dom';
-import { useFeatureFlags } from '../contexts/FeatureFlagsContext';
+import { useFeatureFlags } from '../contexts/FeatureFlagsProvider';
 import ShareButton from './ShareButton';
 import { AppDispatch } from '../slices/types';
 import { StorageContext } from '../contexts/StorageProvider';

@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { navigationRoutes } from './routes';
 import StorageProvider from './contexts/StorageProvider';
+import AuthGuard from './components/AuthGuard';
 
 const MainPage = lazy(() => import('./components/MainPage'));
 const Header = lazy(() =>
@@ -53,9 +54,20 @@ function App() {
             <Route path={navigationRoutes.signup()} element={<SignUpPage />} />
             <Route
               path={navigationRoutes.favorites()}
-              element={<Favorites />}
+              element={
+                <AuthGuard>
+                  <Favorites />{' '}
+                </AuthGuard>
+              }
             />
-            <Route path={navigationRoutes.history()} element={<History />} />
+            <Route
+              path={navigationRoutes.history()}
+              element={
+                <AuthGuard>
+                  <History />{' '}
+                </AuthGuard>
+              }
+            />{' '}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
