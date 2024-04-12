@@ -45,8 +45,8 @@ function App() {
   return (
     <StorageProvider>
       <BrowserRouter>
+        <Header />
         <Suspense fallback={<div>Loading...</div>}>
-          <Header />
           <Routes>
             <Route path={navigationRoutes.main()} element={<MainPage />} />
             <Route path={navigationRoutes.signin()} element={<SignInPage />} />
