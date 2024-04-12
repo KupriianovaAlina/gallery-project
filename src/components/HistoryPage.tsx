@@ -7,7 +7,7 @@ export const History = () => {
   const urls = storage.getUserSearchHistory().reverse();
 
   return (
-    <div className="flex flex-col justify-center items-center py-10 bg-gray">
+    <div className="flex flex-col justify-start items-center py-10 bg-gray">
       <h2 className="font-black font-system text-white text-6xl mb-10">
         {'User history'}
       </h2>
