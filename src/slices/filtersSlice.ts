@@ -14,30 +14,33 @@ const filtersSlice = createSlice({
   name: 'filters',
   initialState,
   reducers: {
-    setNameFilter: (state, action: PayloadAction<string>) => {
-      state.nameFilter = action.payload;
-    },
-    setStatusFilter: (state, action: PayloadAction<string>) => {
-      state.statusFilter = action.payload;
-    },
-    setGenderFilter: (state, action: PayloadAction<string>) => {
-      state.genderFilter = action.payload;
-    },
+    setNameFilter: (state, action: PayloadAction<string>) => ({
+      ...state,
+      nameFilter: action.payload,
+    }),
+    setStatusFilter: (state, action: PayloadAction<string>) => ({
+      ...state,
+      statusFilter: action.payload,
+    }),
+    setGenderFilter: (state, action: PayloadAction<string>) => ({
+      ...state,
+      genderFilter: action.payload,
+    }),
   },
   extraReducers: builder => {
     builder
-      .addCase(
-        fetchData.fulfilled,
-        (state, action: PayloadAction<Payload | undefined>) => {
-          state.fetchStatus = FETCH_STATUS.Fulfilled;
-        },
-      )
-      .addCase(fetchData.pending, state => {
-        state.fetchStatus = FETCH_STATUS.Pending;
-      })
-      .addCase(fetchData.rejected, state => {
-        state.fetchStatus = FETCH_STATUS.Rejected;
-      });
+      .addCase(fetchData.fulfilled, state => ({
+        ...state,
+        fetchStatus: FETCH_STATUS.Fulfilled,
+      }))
+      .addCase(fetchData.pending, state => ({
+        ...state,
+        fetchStatus: FETCH_STATUS.Pending,
+      }))
+      .addCase(fetchData.rejected, state => ({
+        ...state,
+        fetchStatus: FETCH_STATUS.Rejected,
+      }));
   },
 });
 

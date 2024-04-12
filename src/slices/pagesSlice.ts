@@ -1,6 +1,6 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { fetchData } from './sharedThunks';
-import { Info, Payload, Status, pagesState as State } from './types';
+import { pagesState as State } from './types';
 import { FETCH_STATUS } from '../utils/constants';
 
 const initialState: State = {
