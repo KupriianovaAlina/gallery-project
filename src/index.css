@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'SchwiftyFont';
+  src:
+    local('SchwiftyFont'),
+    url(./fonts/get_schwifty.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'AcmeFont';
+  src:
+    local('AcmeFont'),
+    url(./fonts/Acme-Regular.woff) format('woff');
+}
+
+.not-found-button {
+  background-color: #00b5cc;
+}
+
+.not-found-button:hover {
+  background-color: #b2df28;
+}
+
+.not-found-text {
+  color: #b2df28;
+}
+
+.header-button {
+  background-color: #00b5cc;
+}
+
+.header-button:hover {
+  background-color: #b2df28;
+}
